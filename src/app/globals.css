@@ -1,3 +1,223 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom scrollbar styles for WebKit browsers */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #718096;
+  border-radius: 9999px;
+}
+
+body {
+  background-color: #f7fafc;
+}
+
+/* --------------------------- Header Section --------------------------- */
+
+
+.inNavbar {
+  background-color: #fff;
+  width: 100%;
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  /* border: 1px solid black; */
+}
+
+.inNavbar .inLogo {
+  
+  width: 200px;
+  height: 50px;
+  cursor: pointer;
+ 
+}
+
+.inNavbar .inLogo:hover {
+  color: #b794f4;
+}
+
+
+
+
+
+
+
+
+
+.inIcon {
+  color: #4a5568;
+}
+
+.inBtn {
+  background-color: #64c759;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  border-radius: 9999px;
+  color: #fff;
+  opacity: 0.95;
+  transition: all 0.3s ease;
+}
+
+.inBtn:hover {
+  opacity: 1;
+}
+
+.inNavRightOptions {
+  display: flex;
+  align-items: center;
+}
+
+.userProfile {
+  position: relative;
+  /* border: 1px solid black; */
+  margin-left: 20px;
+  /* object-fit: cover; */
+}
+
+.userProfile .userProfileDropdown {
+  position: absolute;
+  top: 3.5rem;
+  right: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  width: 20rem;
+  /* border: 1px solid black; */
+}
+
+.profileWrapper {
+  display: flex;
+  align-items: center;
+  margin: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 0px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+.profileWrapper .profileData {
+  color: #4a5568;
+  display: flex;
+  flex-direction: column;
+}
+
+.profileWrapper .profileData .name {
+  font-weight: 600;
+}
+
+.profileWrapper .profileData span {
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.profileWrapper .profileData span:hover {
+  color: #805ad5;
+}
+
+.userImage img,
+.profileWrapper img {
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.linksWrapper {
+  margin-top: 1rem;
+}
+
+.linksWrapper .link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  margin: 0.25rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.linksWrapper .link:hover {
+  background-color: #edf2f7;
+}
+
+.linksWrapper .link .leftSide {
+  display: flex;
+  align-items: center;
+}
+
+.linksWrapper .link .leftSide .icon {
+  margin: 0.5rem;
+  background-color: #cbd5e0;
+  padding: 0.25rem;
+  font-size: 1.5rem;
+  border-radius: 50%;
+}
+
+.linksWrapper .link .actionIcon {
+  margin: 0.25rem;
+  font-size: 1rem;
+}
+
+.linksWrapper .link .icon,
+.linksWrapper .link .actionIcon {
+  color: #4a5568;
+  font-size: 1rem;
+}
+
+.inNavRightOptions .inBtn {
+  display: none;
+}
+
+.mobileSearchBtn {
+  height: 2.5rem;
+  width: 2.5rem;
+  background-color: #edf2f7;
+  color: #4a5568;
+  cursor: pointer;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+}
+
+.mainContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 48em) {
+  
+  .inSearch {
+    display: block;
+  }
+
+  .inNavRightOptions .inBtn {
+    display: block;
+  }
+}
+
+
+/* --------------------------- Header End --------------------------- */
+
+
 
 .post-card{
   border-radius: 10px; /* Adjust the radius value to control the roundness of the corners */
@@ -220,3 +440,266 @@ cursor: pointer;
 .emoji-icon {
   margin-left: 10px;
 }
+
+
+/* --------------------------- Left Section --------------------------- */
+
+.leftSection {
+  margin: 1rem;
+  margin-left: 5rem;
+  width: 100%;
+  max-width: 15rem;
+  min-width: 15rem;
+  /* display: none; */
+  /* border: 1px solid black; */
+}
+
+.leftSection .userProfileWidget {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.leftSection .userProfileWidget img {
+  width: 3rem;
+}
+
+.leftSection .userProfileWidget .userDetails,
+.rightSection .requestWidget .requestProfile .userDetails {
+  margin-left: 0.75rem;
+}
+
+.leftSection .userProfileWidget .userDetails .name,
+.rightSection .requestWidget .requestProfile .userDetails .name {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.leftSection .userProfileWidget .userDetails .name:hover {
+  color: #4b7bec;
+}
+
+.leftSection .userProfileWidget .userDetails .username,
+.rightSection .requestWidget .requestProfile .userDetails .username {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.profileImage img {
+  border-radius: 50%;
+  width: 2.5rem;
+}
+
+.inSidebar {
+  background-color: white;
+  margin-top: 1.25rem;
+  border-radius: 0.75rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.inSidebar .link {
+  margin: 0.5rem 0;
+  display: flex;
+  padding: 0.5rem 1rem;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.inSidebar .link svg {
+  margin-right: 0.5rem;
+  margin-left: 0.25rem;
+  font-size: 1.25rem;
+  color: #666;
+}
+
+.inSidebar .link:hover svg,
+.inSidebar .link:hover h3 {
+  color: #4b7bec;
+}
+
+.inSidebar .link h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #666;
+}
+
+.sidebarCreateBtn {
+  display: grid;
+  place-items: center;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+/* --------------------------- Left Section End --------------------------- */
+
+/* --------------------------- Main Section --------------------------- */
+
+.mainSection {
+  width: 100%;
+  max-width: var(--max-mainSection);
+  margin-left: 2px;
+  margin-right: auto;
+}
+
+::-webkit-scrollbar {
+  height: 0;
+}
+
+.createPostWidget {
+  height: auto;
+  margin-top: 3px;
+  margin-right: 4px;
+  background-color: white;
+  border-radius: 9999px;
+  position: relative;
+}
+
+.createPostWidget.active {
+  box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 1.5rem;
+}
+
+.createPostWidget .createInput {
+  width: 100%;
+  display: flex;
+  height: auto;
+  padding: 8px 12px;
+  justify-content: space-between;
+}
+
+/* ----------------------Main Section End ------------------------------ */
+
+/* --------------------------- Post --------------------------- */
+
+.postWrapper {
+  background-color: white;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 1rem 4px;
+  padding: 1rem 4px;
+  margin-bottom: 1.5rem;
+}
+
+.postWrapper .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+
+.postWrapper .header .left {
+  display: flex;
+  align-items: center;
+}
+
+.postWrapper .header .right .option > svg {
+  color: #666;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.postWrapper .header .left .userDetails {
+  margin-left: 0.75rem;
+}
+
+.postWrapper .header .left .userDetails .name {
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.postWrapper .header .left .userDetails .name:hover {
+  color: #4b7bec;
+}
+
+/* .postWrapper .header .left .userDetails .feeling {
+  font-size: 0.75rem;
+  color: #666;
+} */
+
+.postWrapper .header .left .profileImg {
+  object-fit: cover;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+}
+
+.mainPostContent {
+  display: flex;
+  justify-content: center;
+}
+
+.mainPostContent .postImage {
+  max-width: 100%;
+  max-height: 20rem;
+  margin-top: 0.5rem;
+  border-radius: 0.75rem;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.postFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+
+.postFooter .postActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.postFooter .postActions svg {
+  margin: 0 0.25rem;
+  color: #666;
+  font-size: 1.6rem;
+  cursor: pointer;
+  height: 1.4rem;
+  width: 1.4rem;
+  transition: color 0.3s ease;
+}
+
+.postFooter .postActions svg:hover {
+  color: #4b7bec;
+}
+
+.postFooter .postActions .left {
+  display: flex;
+  align-items: center;
+}
+
+.noUserFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.noUserFound svg {
+  font-size: 5rem;
+  color: #666;
+}
+
+.noUserFound h3 {
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  color: #666;
+}
+
+/* --------------------------- Post End --------------------------- */
