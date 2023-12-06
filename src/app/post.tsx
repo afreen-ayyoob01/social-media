@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from './config/firebase';
-
+import React, { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "./config/firebase";
+import { FaEllipsisH } from "react-icons/fa";
+import { HiOutlineBookmark, HiOutlineHeart,  HiOutlineShare } from "react-icons/hi";
+import {HiOutlineChatBubbleOvalLeftEllipsis} from "react-icons/hi2"
 interface Post {
   id: string;
   name: string;
@@ -12,37 +14,93 @@ interface Post {
 }
 
 const PostList: React.FC = () => {
+  
+
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'posts'));
+        const querySnapshot = await getDocs(collection(db, "posts"));
         const data = querySnapshot.docs.map((doc) => doc.data() as Post);
         setPosts(data);
       } catch (err) {
-        console.error('Error fetching posts: ', err);
+        console.error("Error fetching posts: ", err);
       }
     };
 
     fetchPosts();
   }, []);
 
-  console.log('posts', posts);
+  console.log("posts", posts);
 
   return (
-    <div>
-      {/* Render the posts */}
-      {posts.map((post) => (
-        <div key={post.id} className="post-card">
-          <h3>{post.name}</h3>
-          <p>{post.text}</p>
-          {post.image && <img src={post.image} alt="Post Image" />}
-          {post.userImage && <img src={post.userImage} alt="User Image" />}
-          {/* Render other post data */}
+    // <div>
+    //   {/* Render the posts */}
+    //   {posts.map((post) => (
+    //     <div key={post.id} className="post-card">
+    //       <h3>{post.name}</h3>
+    //       <p>{post.text}</p>
+    //       {post.image && <img src={post.image} alt="Post Image" />}
+    //       {post.userImage && <img src={post.userImage} alt="User Image" />}
+    //        {/* Render other post data  */}
+    //     </div>
+    //   ))}
+    // </div>
+
+    <>
+      <div className="postWrapper">
+        {posts.map((post) => (
+          <div key={post.id} className="post-card">
+            <div className="header">
+              <div className="left">
+              
+                {post.userImage && (
+                  <img
+                    src={post.userImage}
+                    alt="User Profile"
+                    className="profileImg"
+                  />
+                )}
+                <div className="userDetails">
+                  <div className="name">{post.name}</div>
+                </div>
+              </div>
+              <div className="right">
+                <div className="option">
+                  <FaEllipsisH />
+                </div>
+              </div>
+            </div>
+            <div className="mainPostContent">
+              <p>{post.text}</p>
+              {post.image && <img src={post.image} alt="Post Image" className="postImage"/>}
+              {/* {post.userImage && <img src={post.userImage} alt="User Image" />} */}
+            </div>
+            <div className="postFooter">
+          <div className="postActions">
+            <div className="left">
+              <div className="likeBtn">
+                <HiOutlineHeart />
+              </div>
+              <div className="commentBtn">
+                <HiOutlineChatBubbleOvalLeftEllipsis />
+              </div>
+              <div className="shareBtn">
+                <HiOutlineShare />
+              </div>
+            </div>
+            <div className="right">
+              <div className="saveBtn">
+                <HiOutlineBookmark />
+              </div>
+            </div>
+          </div>
         </div>
-      ))}
-    </div>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 
