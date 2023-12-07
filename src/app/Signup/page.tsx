@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 // import { Auth } from "./Components/AuthContext";
 import { db, auth } from "../config/firebase";
-
-
+ 
+ 
 function SignUp(): JSX.Element {
   const router = useRouter();
   const [users, setUsers] = useState<any[]>([]);
@@ -24,9 +24,9 @@ function SignUp(): JSX.Element {
   const [passwordError, setPasswordError] = useState("");
   const [image, setImage] = useState<File | undefined>(undefined);
   const [imageUrl, setImageUrl] = useState("");
-
+ 
   const usersCollectionRef = collection(db, "users");
-
+ 
   const getUsers = async (): Promise<void> => {
     try {
       const data = await getDocs(usersCollectionRef);
@@ -39,11 +39,11 @@ function SignUp(): JSX.Element {
       console.error(err);
     }
   };
-
+ 
   useEffect(() => {
     getUsers();
   }, []);
-
+ 
   const onSubmitSignup = async (): Promise<void> => {
     try {
       const { user } = await createUserWithEmailAndPassword(
@@ -51,14 +51,14 @@ function SignUp(): JSX.Element {
         email,
         password
       );
-
+ 
       let imageUrl = "";
       if (image) {
         const storageRef = ref(getStorage(), `images/${user?.uid}/${image.name}`);
         await uploadBytes(storageRef, image);
         imageUrl = await getDownloadURL(storageRef);
       }
-
+ 
       await addDoc(usersCollectionRef, {
         name: name,
         email: email,
@@ -69,9 +69,9 @@ function SignUp(): JSX.Element {
         userId: user?.uid,
         imageUrl: imageUrl,
       });
-
+ 
       getUsers();
-
+ 
       setTimeout(() => {
         router.push("/");
       }, 1000);
@@ -80,35 +80,39 @@ function SignUp(): JSX.Element {
     }
    
   };
-
-  
-
+ 
+ 
+ 
 //   const handleLogin = () => {
-    
+   
 //   };
-
+ 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-
+ 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-
+ 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     setImage(file);
   };
-
+ 
   return (
-    <div data-testid="sign-up-form" className="register-container">
+    <div data-testid="sign-up-form" className="signup-container">
+      <div className="logo-container">
+        <div className="logo">
+      <img src="assets/image/ss-logo-new.png" alt="Logo" />
+      </div>
+      </div>
       <div className="form-container">
+        <div className="form-card">
         <h1 className="register">Register Here!</h1>
         <div>
           <div className="input-field">
-            <label className="input-label" htmlFor="name">
-              Name:
-            </label>
+           
             <input
               className="input-area"
               id="name"
@@ -119,9 +123,9 @@ function SignUp(): JSX.Element {
             />
           </div>
           <div>
-            <label className="input-label" htmlFor="image">
+            {/* <label className="input-label" htmlFor="image">
               Image:
-            </label>
+            </label> */}
             <input
               className="input-area"
               id="image"
@@ -132,9 +136,9 @@ function SignUp(): JSX.Element {
             />
           </div>
           <div>
-            <label className="input-label" htmlFor="email">
+            {/* <label className="input-label" htmlFor="email">
               Email:
-            </label>
+            </label> */}
             <input
               className="input-area"
               id="email"
@@ -147,10 +151,10 @@ function SignUp(): JSX.Element {
             {/* {emailError && <span={error}>{emailError}</span>} */}
           </div>
           <div>
-            <label className="input-label" htmlFor="password">
+            {/* <label className="input-label" htmlFor="password">
               Password:
-            </label>
-      
+            </label> */}
+     
             <input
               className="input-area"
               id="password"
@@ -162,9 +166,9 @@ function SignUp(): JSX.Element {
             {passwordError && <span>{passwordError}</span>}
           </div>
           <div>
-            <label className="input-label" htmlFor="confirmPassword">
+            {/* <label className="input-label" htmlFor="confirmPassword">
               Confirm Password:
-            </label>
+            </label> */}
             <input
               className="input-area"
               id="confirmPassword"
@@ -175,9 +179,9 @@ function SignUp(): JSX.Element {
             />
           </div>
           <div>
-            <label className="input-label" htmlFor="dateOfBirth">
+            {/* <label className="input-label" htmlFor="dateOfBirth">
               Date of Birth:
-            </label>
+            </label> */}
             <input
               className="input-area"
               id="dateOfBirth"
@@ -188,9 +192,9 @@ function SignUp(): JSX.Element {
             />
           </div>
           <div>
-            <label className="input-label" htmlFor="address">
+            {/* <label className="input-label" htmlFor="address">
               Address:
-            </label>
+            </label> */}
             <input
               className="input-area"
               id="address"
@@ -200,9 +204,9 @@ function SignUp(): JSX.Element {
             />
           </div>
           <div>
-            <label className="input-label" htmlFor="mobileNo">
+            {/* <label className="input-label" htmlFor="mobileNo">
               Mobile No:
-            </label>
+            </label> */}
             <input
               className="input-area"
               id="mobileNo"
@@ -223,7 +227,8 @@ function SignUp(): JSX.Element {
       <ToastContainer />
      
     </div>
+    </div>
   );
 }
-
+ 
 export default SignUp;
