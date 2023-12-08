@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 // import { Auth } from "./Components/AuthContext";
 import { db, auth } from "../config/firebase";
+import { faEnvelope, faUser, faLock , faMobile, faMapMarkerAlt, faCalendar, faImage} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
  
  
 function SignUp(): JSX.Element {
@@ -109,10 +111,12 @@ function SignUp(): JSX.Element {
       </div>
       <div className="form-container">
         <div className="form-card">
-        <h1 className="register">Register Here!</h1>
+        <h1 className="register">Create Account</h1>
         <div>
           <div className="input-field">
-           
+          <div className="input-icon">
+    <FontAwesomeIcon icon={faUser} />
+  </div>
             <input
               className="input-area"
               id="name"
@@ -123,6 +127,9 @@ function SignUp(): JSX.Element {
             />
           </div>
           <div>
+          <div className="input-icon">
+    <FontAwesomeIcon icon={faImage} />
+  </div>
             {/* <label className="input-label" htmlFor="image">
               Image:
             </label> */}
@@ -136,6 +143,10 @@ function SignUp(): JSX.Element {
             />
           </div>
           <div>
+          <div className="input-icon">
+    <FontAwesomeIcon icon={faEnvelope} />
+  </div>
+     
             {/* <label className="input-label" htmlFor="email">
               Email:
             </label> */}
@@ -154,7 +165,9 @@ function SignUp(): JSX.Element {
             {/* <label className="input-label" htmlFor="password">
               Password:
             </label> */}
-     
+          <div className="input-icon">
+    <FontAwesomeIcon icon={faLock} />
+  </div>
             <input
               className="input-area"
               id="password"
@@ -166,6 +179,9 @@ function SignUp(): JSX.Element {
             {passwordError && <span>{passwordError}</span>}
           </div>
           <div>
+          <div className="input-icon">
+    <FontAwesomeIcon icon={faLock} />
+  </div>
             {/* <label className="input-label" htmlFor="confirmPassword">
               Confirm Password:
             </label> */}
@@ -179,6 +195,9 @@ function SignUp(): JSX.Element {
             />
           </div>
           <div>
+          <div className="input-icon">
+    <FontAwesomeIcon icon={faCalendar} />
+  </div>
             {/* <label className="input-label" htmlFor="dateOfBirth">
               Date of Birth:
             </label> */}
@@ -192,6 +211,9 @@ function SignUp(): JSX.Element {
             />
           </div>
           <div>
+          <div className="input-icon">
+    <FontAwesomeIcon icon={faMapMarkerAlt} />
+  </div>
             {/* <label className="input-label" htmlFor="address">
               Address:
             </label> */}
@@ -204,6 +226,9 @@ function SignUp(): JSX.Element {
             />
           </div>
           <div>
+          <div className="input-icon">
+    <FontAwesomeIcon icon={faMobile} />
+  </div>
             {/* <label className="input-label" htmlFor="mobileNo">
               Mobile No:
             </label> */}
