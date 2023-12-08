@@ -21,6 +21,186 @@ body {
   background-color: #f7fafc;
 }
 
+/*-------------Login section-----------------------------*/
+ 
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+ 
+.logoContainer {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ 
+.formContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+ 
+.title {
+  margin-bottom: 1rem;
+}
+ 
+.inputField {
+  margin-bottom: 1rem;
+}
+ 
+.inputLabel {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+ 
+.inputArea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+ 
+.error {
+  color: red;
+  margin-bottom: 1rem;
+}
+ 
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+ 
+.submitBtn {
+  padding: 0.5rem 1rem;
+  background-color: #64c759;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+ 
+.submitBtn:hover {
+  background-color: #468e3e;
+}
+ 
+.link {
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+}
+ 
+/* ---------------------------- Login Section Ends --------------------- */
+
+
+/* --------------------------- Signup Section --------------------------- */
+ 
+.signup-container {
+  display: flex;
+  /* justify-content: center;
+  align-items: center; */
+  height: 100vh;
+  /* border: 1px solid black; */
+  /* overflow-y: hidden; */
+ 
+}
+ 
+.logo-container {
+  width: 50%;
+  background-color: white;
+  /* height: 100%; */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* border: 1px solid rgb(189, 70, 70); */
+}
+ 
+.logo {
+  /* width: 50%; */
+  /* height: 200px; */
+  position: fixed;
+  top: 35%;
+  left: 3%;
+  /* border: 1px solid black; */
+
+}
+ 
+.form-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  overflow-y: auto;
+  border: 1px solid black;
+  /* background-color: #b7d679 ; */
+}
+
+.form-card{
+  border: 1px solid black;
+  background-color: white;
+}
+ 
+.register {
+  /* margin-bottom: 1rem; */
+  margin-top: 10px;
+  color:yellowgreen;
+  padding: 10px;
+  border: 1px solid black;
+}
+ 
+/* .input-field {
+  margin-bottom: 1rem;
+  border: 1px solid black;
+} */
+ 
+.input-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  padding: 5px;
+  border: 1px solid black;
+}
+ 
+.input-area {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  border: 1px solid black;
+}
+ 
+.btn-container {
+  display: flex;
+  justify-content: center;
+align-items: center;
+}
+ 
+.register-btn {
+  padding: 0.5rem 1rem;
+  background-color:yellowgreen;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+ 
+.toast-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+}
+
+/* --------------------------- Signup Section Ends --------------------------- */
+
 /* --------------------------- Header Section --------------------------- */
 
 
@@ -277,108 +457,6 @@ body {
 
 
 
-.register{
-  margin-top: -6px;
-  padding: 2px;
-  text-align: center;
-  margin-bottom: 30px;
-
-}
-.register-container {
-  display: flex;
-  width: 100%;
-  padding: 15px;
-  /* margin-top: 10%; */
-  background-color:white;
-  font-family: "Roboto", sans-serif;
-  /* line-height: 1.9; */
-/* border: 1px solid black;  */
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-
-}
-.form-container {
-  width: 50%;
-  height: 82%;
-  margin-bottom: 0px;
-  padding: 40px;
-   border:1px solid;
-  border-style: double;
-  border-color: #ec89a0;
-  background-color: white;
-  border-radius: 5px;
-}
-
-.input-area{
-  width: 98%;
-  padding: 12px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  display: inline-block;
-  background-color: #efe5eed6;
-  border:none;
-  font-size: 1rem;
-  border-radius: 4px;
-  font-family: "Roboto", sans-serif;
-  box-sizing: border-box;
-}
-
-.input-label {
-  line-height: 1.2;
-  margin-bottom: 8px;
-  margin-top: 8px;
-  font-weight: bold;
-  font-family: "Roboto", sans-serif;
-}
-
-.input-field {
-  margin-left: -7px;
-  padding: 10px;
-}
-
-span.error {
-  color: red;
-}
-
-.register-btn {
-  border: none;
-  border-radius: 4px;
-  background-color:#ff3f6c;
-  color:white;
-  font-weight: bold;
-  margin-top:30px;
-  /* // padding: 0.75rem 1rem; */
-  padding: 0.9rem 1.5rem;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  &:hover {
-    background-color:#df2752;
-  }
-}
-.btn-container{
-  display: flex;
-  justify-content: center;
-}
-
-.p{
-  margin-top: 18px;
-  display: flex;
-  cursor: pointer;
-  justify-content:flex-start;
-}
-
-.loginClick{
-cursor: pointer;
-  color:#df2752;
-  margin-left: 5px;
-  &:hover {
-    color:#e15072;
-    text-decoration:underline;
-  }
-}
 
 .post-card {
   border-radius: 10px;

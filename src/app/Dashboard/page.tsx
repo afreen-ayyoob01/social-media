@@ -105,7 +105,7 @@ const Card: React.FC = () => {
   };
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className="mainContainer">
         <Sidebar />
 
