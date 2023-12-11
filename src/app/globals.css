@@ -6,22 +6,27 @@
   padding: 0;
 }
 
+
 /* Custom scrollbar styles for WebKit browsers */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
+
 ::-webkit-scrollbar-thumb {
   background-color: #718096;
   border-radius: 9999px;
 }
 
+
 body {
   background-color: #f7fafc;
 }
 
+
 /*-------------Login section-----------------------------*/
+
 
 .container {
   display: flex;
@@ -31,6 +36,7 @@ body {
   /* border:1px solid black; */
   background-color: white;
 }
+
 
 /* .logoContainer {
   width: 20%;
@@ -52,7 +58,12 @@ body {
   border: none;
   background-color: rgba(146, 212, 92, 0.251);
   border-radius: 18px;
+  border: none;
+  background-color: rgba(146, 212, 92, 0.251);
+  border-radius: 18px;
 } */
+
+/* .formContainer {
 
 /* .formContainer {
   width:25%;
@@ -78,9 +89,34 @@ body {
   /* background-color: white; */
   background-color: rgba(146, 212, 92, 0.251);
   border-radius: 18px;
+} */
+
+.formContainer {
+  width: 25%;
+  height: 55%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  padding: 20px;
+  /* transform: translateY(10%); */
+  /* border: 1px solid rgb(0, 0, 0); */
+  /* background-color: white; */
+  background-color: rgba(146, 212, 92, 0.251);
+  border-radius: 18px;
 }
 
+
 .title {
+  /* margin-top: 10px; */
+  /* display: block; */
+  color: yellowgreen;
+  /* color: white; */
+  width: 50%;
+  transform: translate(16%, -120%);
+  /* padding: 10px; */
+  /* margin-left: 60px; */
   /* margin-top: 10px; */
   /* display: block; */
   color: yellowgreen;
@@ -101,7 +137,21 @@ body {
 
 .inputArea {
   width: 100%;
+.form{
+  width: 100%;
+  height: 60%;
+  /* border: 1px solid black; */
+  transform: translateY(-10%);
+}
+
+.inputArea {
+  width: 100%;
   height: 20%;
+  /* transform: translateX(-17%); */
+  /* margin-left: -60px; */
+  /* padding: 0.5rem; */
+  padding: 8px;
+  margin-top: 12px;
   /* transform: translateX(-17%); */
   /* margin-left: -60px; */
   /* padding: 0.5rem; */
@@ -124,6 +174,18 @@ body {
 .forgotPassword {
   /* margin-left: -59px; */
   /* padding: 1px; */
+.inputArea::placeholder{
+  /* border: 1px solid #ccc; */
+  color: #ccc;
+}
+
+.inputArea:focus{
+  outline: 1px solid #878787;
+}
+
+.forgotPassword {
+  /* margin-left: -59px; */
+  /* padding: 1px; */
   /* height: 20%; */
   /* margin-top: -15px; */
   transform: translate(60%, -50%);
@@ -134,7 +196,17 @@ body {
   font-size: small;
   /* margin-left: -80px; */
   /* border: 1px solid rgb(189, 20, 20); */
+  /* margin-top: -15px; */
+  transform: translate(60%, -50%);
+  color: yellowgreen;
+  text-decoration: none;
+  display: block;
+  margin-top: 15px;
+  font-size: small;
+  /* margin-left: -80px; */
+  /* border: 1px solid rgb(189, 20, 20); */
 }
+
 
 .error {
   color: red;
@@ -150,16 +222,36 @@ body {
   /* border: 1px solid black; */
   display: block;
   /* transform: translate(-22%, 10%); */
+  font-size: small;
+  /* margin-bottom: 1rem; */
+  /* border: 1px solid black; */
+  /* margin: 15px; */
+  /* transform: translate(-55%, 15%); */
+  /* margin-top: 30px; */
 }
+
+.error-div{
+  /* border: 1px solid black; */
+  display: block;
+  /* transform: translate(-22%, 10%); */
+}
+
 
 .btnContainer {
   display: flex;
   justify-content: center;
   margin-top: 1rem;
   /* border: 1px solid black; */
+  /* border: 1px solid black; */
 }
 
+
 .submitBtn {
+  /* padding: 0.5rem 1rem; */
+  width: 100%;
+  /* width: 300px; */
+  height: 30px;
+  /* padding: 20px; */
   /* padding: 0.5rem 1rem; */
   width: 100%;
   /* width: 300px; */
@@ -168,11 +260,14 @@ body {
   background-color: #64c759;
   color: #fff;
   font-weight: bold;
+  font-weight: bold;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   /* border: 1px solid black; */
+  /* border: 1px solid black; */
 }
+
 
 .submitBtn:hover {
   background-color: #468e3e;
@@ -188,13 +283,29 @@ body {
 }
 
 /* .Link-login {
+
+.footer{
+  display: flex;
+  font-size: smaller;
+  transform: translate(-8%, 20%);
+  /* border: 1px solid black; */
+  /* color: rgb(18, 17, 17); */
+  color: yellowgreen;
+}
+
+/* .Link-login {
   display: block;
+  text-align: left;
   text-align: left;
   color: black;
   margin-top: 1.2rem;
   text-decoration: none;
   border: 1px solid black;
 } */
+  text-decoration: none;
+  border: 1px solid black;
+} */
+
 
 .Signup-link {
   /* display: inline-block; */
@@ -211,7 +322,17 @@ body {
 .Signup-link:hover{
   color: rgb(93, 126, 27);
   text-decoration: underline;
+  margin-left: 5px;
+  /* border: 1px solid black; */
 }
+
+.Signup-link:hover{
+  color: rgb(93, 126, 27);
+  text-decoration: underline;
+}
+
+  /* display: block; */
+  /* text-align: left; */
 .forgotPasswordLink {
   /* display: block; */
   /* text-align: left; */
@@ -269,7 +390,11 @@ body {
 
 
 
+
+
+
 /* --------------------------- Signup Section --------------------------- */
+
 
 .signup-container {
   display: flex;
@@ -277,13 +402,17 @@ body {
   align-items: center; */
   height: 100vh;
   border: 10px solid rgb(42, 77, 113);
+  border: 10px solid rgb(42, 77, 113);
 }
+
 
 .logo-container {
   width: 50%;
   background-color: white;
   border: 10px solid red;
+  border: 10px solid red;
 }
+
 
 .logo {
   /* width: 50%; */
@@ -294,7 +423,11 @@ body {
 
   border: 1px solid black;
  
+
+  border: 1px solid black;
+ 
 }
+
 
 .form-container {
   width: 50%;
@@ -309,7 +442,12 @@ body {
   overflow-y: auto;
   border: 10px solid rgb(169, 40, 40);
   background-color: rgb(255, 255, 255);
+  border: 10px solid rgb(169, 40, 40);
+  background-color: rgb(255, 255, 255);
 }
+
+.form-card {
+  border: 1px solid rgb(165, 23, 23);
 
 .form-card {
   border: 1px solid rgb(165, 23, 23);
@@ -323,15 +461,19 @@ body {
   height: 430px;
 }
 
+
 .register {
   /* margin-bottom: 1rem; */
   margin-top: 10px;
+  color: yellowgreen;
+  width: 70%;
   color: yellowgreen;
   width: 70%;
   padding: 10px;
   margin-left: 55px;
   /* border: 1px solid black; */
 }
+
 
 .input-label {
   display: block;
@@ -340,13 +482,16 @@ body {
   /* border: 1px solid black; */
 }
 
+
 .input-area {
   width: 95%;
   margin-left: 10px;
   padding: 0.5rem;
   margin-top: 4px;
+  margin-top: 4px;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
 }
 
 .input-icon {
@@ -357,14 +502,19 @@ body {
   position: relative;
   bottom: 50%;
   top: 10%;
+  bottom: 50%;
+  top: 10%;
   /* left:10%; */
 }
+
 
 .btn-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  align-items: center;
 }
+
 
 .register-btn {
   padding: 0.5rem 1rem;
