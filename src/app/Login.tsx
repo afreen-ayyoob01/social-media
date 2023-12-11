@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { auth, db } from "./config/firebase";
 import { getDocs, query, collection, where } from "firebase/firestore";
 import { useRouter } from 'next/navigation';
@@ -11,14 +11,33 @@ function Login(): JSX.Element {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
- 
+  const [forgotPasswordError, setForgotPasswordError] = useState("");
+  const [forgotPasswordSuccess, setForgotPasswordSuccess] = useState("");
+
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
  
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+  };
+
+  const handleRememberMeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRememberMe(e.target.checked);
+  };
+
+  const handleForgotPassword = async () => {
+    setForgotPasswordError("");
+    setForgotPasswordSuccess("");
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setForgotPasswordSuccess("Password reset email sent. Please check your inbox.");
+    } catch (error) {
+      setForgotPasswordError("Failed to send password reset email. Please try again.");
+    }
   };
  
   const fetchUserDetails = async (userId: string) => {
@@ -82,14 +101,20 @@ function Login(): JSX.Element {
  
   return (
     <div className="container">
-      <div className="logoContainer">
-        <img src="assets/image/ss-logo-new.png" alt="Logo" />
+     <div className="logo-container">
+        <div className="logo">
+      <img src="assets/image/ss-logo-new.png" alt="Logo" />
       </div>
+      </div>
+      {/* <div className="login-card"> */}
       <div className="formContainer">
         <h2 className="title">Login</h2>
-        <form onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit} >
+          <div className="error-div">
+        {error && <span className="error">{error}</span>}
+        </div>
           <div className={"inputField"}>
-            <label htmlFor="email" className={"inputLabel"}>Email:</label>
+            {/* <label htmlFor="email" className={"inputLabel"}>Email:</label> */}
             <input
               id="email"
               type="email"
@@ -101,7 +126,7 @@ function Login(): JSX.Element {
             />
           </div>
           <div className={"inputField"}>
-            <label htmlFor="password" className={"inputLabel"}>Password:</label>
+            {/* <label htmlFor="password" className={"inputLabel"}>Password:</label> */}
             <input
               id="password"
               type="password"
@@ -112,9 +137,34 @@ function Login(): JSX.Element {
               className={"inputArea"}
             />
           </div>
-          {error && <span className={error}>{error}</span>}
+
+      
+        {forgotPasswordError && <span className="error">{forgotPasswordError}</span>}
+          {/* {forgotPasswordSuccess && <span className="success">{forgotPasswordSuccess}</span>} */}
+          <div className="forgotPassword">
+            {/* <span className="forgotPasswordText">Forgot your password?</span> */}
+            <Link 
+              className="forgotPasswordLink" 
+              href="/forgot-password">Forgot Password?
+            </Link>
+          </div>
+          {/* <div className="checkbox-inputField">
+          <label htmlFor="rememberMe" className="checkbox-inputLabel">
+            Remember me:
+            <div className="remember-checkbox">
+            <input
+              id="rememberMe"
+              type="checkbox"
+              checked={rememberMe}
+              onChange={handleRememberMeChange}
+              className="checkboxLabel input"
+            />
+            </div>
+          </label>
+        </div> */}
+          {/* {error && <span className="error">{error}</span>} */}
           <div className={"btnContainer"}>
-            <button type="submit" 
+            <button type="submit"
             className={"submitBtn"}
             // className="inBtn"
             >Login</button>
@@ -122,10 +172,13 @@ function Login(): JSX.Element {
           </div>
  
         </form>
-        <div>
-        <Link href='/Signup'>Don't have an account! Signup here.</Link>
+        <div className="footer">
+        {/* <Link className="Link-login" href='/Signup'>Doesn't have an account yet?</Link> */}
+        <p>Don't have an account?</p>
+        <Link className="Signup-link" href='/Signup'>Signup Here!</Link>
         </div>
       </div>
+      {/* </div> */}
     </div>
   );
 }
