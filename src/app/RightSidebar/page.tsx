@@ -9,7 +9,7 @@ interface User {
   imageUrl?: string;
 }
 
-const PostList: React.FC = () => {
+const UserList: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
@@ -45,4 +45,4 @@ const PostList: React.FC = () => {
   );
 };
 
-export default PostList;
+export default UserList;
