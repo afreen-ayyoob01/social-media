@@ -1,65 +1,58 @@
+'use client'
+
 import React, { useEffect, useState } from "react";
-import { collection, getDocs, onSnapshot, query, orderBy } from "firebase/firestore";
-import { db } from "./config/firebase";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
+import { db } from "../config/firebase";
 import { FaEllipsisH } from "react-icons/fa";
 import { HiOutlineBookmark, HiOutlineHeart, HiOutlineShare } from "react-icons/hi";
 import { HiOutlineChatBubbleOvalLeftEllipsis } from "react-icons/hi2";
 
-interface Post {
+interface User {
   id: string;
   name: string;
-  text: string;
-  image?: string;
-  userImage?: string;
+  imageUrl?: string;
   // Add other fields as needed
 }
 
 const PostList: React.FC = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
-
-
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const postsRef = collection(db, "posts");
-        const querySnapshot = await getDocs(query(postsRef, orderBy("timestamp", "desc")));
-        const data = querySnapshot.docs.map((doc) => doc.data() as Post);
-        setPosts(data);
-      } catch (err) {
-        console.error("Error fetching posts: ", err);
-      }
-    };
+    // const fetchUsers = async () => {
+    //   try {
+    //     const usersRef = collection(db, "users");
+    //     const querySnapshot = await getDocs(usersRef);
+    //     const data = querySnapshot.docs.map((doc) => doc.data() as User);
+    //     setUsers(data);
+    //   } catch (err) {
+    //     console.error("Error fetching users: ", err);
+    //   }
+    // };
 
-    const unsubscribe = onSnapshot(
-      query(collection(db, "posts"), orderBy("timestamp", "desc")), // Updated query
-      (snapshot) => {
-        const updatedPosts = snapshot.docs.map((doc) => doc.data() as Post);
-        setPosts(updatedPosts);
-      }
-    );
+    const unsubscribe = onSnapshot(collection(db, "users"), (snapshot) => {
+      const updatedUsers = snapshot.docs.map((doc) => doc.data() as User);
+      setUsers(updatedUsers);
+    });
 
-
-    fetchPosts();
+    // fetchUsers();
 
     return () => unsubscribe();
   }, []);
 
-  console.log("posts", posts);
+  console.log("users", users);
 
   return (
     <>
-      <div className="postWrapper">
-        {posts.map((post) => (
-          <div key={post.id} className="post-card">
+      <div className="userWrapper">
+        {users.map((user) => (
+          <div key={user.id} className="user-card">
             <div className="header">
               <div className="left">
-                {post.userImage && (
-                  <img src={post.userImage} alt="User Profile" className="profileImg" />
+                {user.imageUrl && (
+                  <img src={user.imageUrl} alt="User Profile" className="profileImg" />
                 )}
                 <div className="userDetails">
-                  <div className="name">{post.name}</div>
-                
+                  <div className="name">{user.name}</div>
                 </div>
               </div>
               <div className="right">
@@ -67,11 +60,6 @@ const PostList: React.FC = () => {
                   <FaEllipsisH />
                 </div>
               </div>
-            </div>
-            <div className="mainPostContent">
-              <p>{post.text}</p>
-              {post.image && <img src={post.image} alt="Post Image" className="postImage" />}
-              {/* {post.userImage && <img src={post.userImage} alt="User Image" />} */}
             </div>
             <div className="postFooter">
               <div className="postActions">

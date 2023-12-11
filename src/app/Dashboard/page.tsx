@@ -1,11 +1,10 @@
-"use client";
+"use client"
 
 import React, { useRef, useState } from "react";
 import { GrGallery } from "react-icons/gr";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-// import DatePicker from 'react-datepicker';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { IoCalendarNumberOutline } from "react-icons/io5";
@@ -22,6 +21,7 @@ import RootLayout from "../layout";
 import { useClickOutside } from "../useOutsideClick";
 
 const Card: React.FC = () => {
+  console.log("cardpostcbfvhkfehvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
   const [input, setInput] = useState("");
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -69,29 +69,30 @@ const Card: React.FC = () => {
     const name = sessionStorage.getItem("name");
 
     try {
-      let imageUrl = null;
+      let image = null;
+      let userImage = null;
 
       const userDocRef = doc(db, `users/${id}`);
       const userDocSnap = await getDoc(userDocRef);
       if (userDocSnap.exists()) {
-        const userImage = userDocSnap.data().userImage;
-        if (userImage) {
-          imageUrl = userImage;
+        const userData = userDocSnap.data();
+        if (userData.userImage) {
+          userImage = userData.userImage;
         }
       }
 
       if (selectedImage) {
         const storageRef = ref(storage, `images/${id}/${selectedImage.name}`);
         const snapshot = await uploadBytes(storageRef, selectedImage);
-        imageUrl = await getDownloadURL(snapshot.ref);
+        image = await getDownloadURL(snapshot.ref);
       }
 
       const docRef = await addDoc(collection(db, "posts"), {
         userId: id,
         name: name,
         text: input,
-        image: imageUrl,
-        userImage: imageUrl,
+        image: image,
+        userImage: userImage,
         timestamp: serverTimestamp(),
       });
 
@@ -99,10 +100,14 @@ const Card: React.FC = () => {
 
       setInput("");
       setSelectedImage(null);
+      console.log("userimage",userImage)
+  console.log("post image",image)
     } catch (err) {
       console.error("Error creating post: ", err);
     }
+    
   };
+  console.log("xshgggggggggggggggggggggggggggggggggxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
   return (
     <div>
       <Header />
@@ -110,61 +115,6 @@ const Card: React.FC = () => {
         <Sidebar />
 
         <div className="mainSection">
-          {/* <div className="post-card">
-          <textarea
-          rows={2}
-          className="textarea"
-          placeholder="What's Happening?"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          />
-          {selectedImage && (
-          <img
-            src={URL.createObjectURL(selectedImage)}
-            alt="Selected"
-            className="selected-image"
-          />
-          )}
-          <label htmlFor="file-input" className="file-input-label">
-          <GrGallery className="gallery-icon" onClick={handleImageUpload} />
-          </label>
-          <input
-          id="file-input"
-          type="file"
-          onChange={handleFileInputChange}
-          accept="image/*"
-          ref={fileInputRef}
-          style={{ display: 'none' }}
-          />
-          <MdOutlineEmojiEmotions
-          className="emoji-icon"
-          onClick={() => setShowEmojis(!showEmojis)}
-          />
-          <IoCalendarNumberOutline
-          className="calendar-icon"
-          onClick={handleCalendarToggle}
-          />
-          <HiOutlineLocationMarker className="location-icon" />
-
-          <button
-          className="tweet-button"
-          disabled={!input.trim() && !selectedImage}
-          onClick={handleButtonClick}
-          >
-          Post
-          </button>
-          </div>
-          {showEmojis && (
-            <div>
-              <Picker onEmojiSelect={handleEmojiSelect} data={data} theme="light" />
-            </div>
-          )}
-          {showCalendar && (
-            <div className="calendar-container">
-              <DatePicker selected={selectedDate} onChange={handleDateSelect} inline />
-            </div>
-          )} */}
-
           <div
             ref={reff}
             className={`createPostWidget ${isFocused ? "active" : ""}`}
@@ -179,19 +129,14 @@ const Card: React.FC = () => {
                 // id="createNewPost"
                 onFocus={() => setIsFocused(true)}
               />
-              {selectedImage && (
-                <img
-                  src={URL.createObjectURL(selectedImage)}
-                  alt="Selected"
-                  className="selected-image"
-                />
-              )}
-              <label htmlFor="file-input" className="file-input-label">
-                <GrGallery
-                  className="gallery-icon"
-                  onClick={handleImageUpload}
-                />
-              </label>
+                <label htmlFor="file-input" className="file-input-label">
+          {selectedImage ? (
+            <img src={URL.createObjectURL(selectedImage)} alt="Selected" className="selected-image" />
+          ) : (
+            null
+          )}
+        </label>
+        <GrGallery style={{ color: "green" }}className="gallery-icon" onClick={handleImageUpload} />
               <input
                 id="file-input"
                 type="file"
