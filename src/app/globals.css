@@ -21,8 +21,334 @@ body {
   background-color: #f7fafc;
 }
 
-/* --------------------------- Header Section --------------------------- */
+/*-------------Login section-----------------------------*/
 
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* border:1px solid black; */
+  background-color: white;
+}
+
+/* .logoContainer {
+  width: 20%;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border:1px solid rgb(185, 71, 71);
+} */
+
+/* .login-card {
+  width:30%;
+  height: 80%;
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border:1px solid black;
+  border: none;
+  background-color: rgba(146, 212, 92, 0.251);
+  border-radius: 18px;
+} */
+
+/* .formContainer {
+  width:25%;
+  height: 54%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border:1px solid black;
+  background-color: white;
+} */
+
+.formContainer {
+  width: 25%;
+  height: 55%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  padding: 20px;
+  /* transform: translateY(10%); */
+  /* border: 1px solid rgb(0, 0, 0); */
+  /* background-color: white; */
+  background-color: rgba(146, 212, 92, 0.251);
+  border-radius: 18px;
+}
+
+.title {
+  /* margin-top: 10px; */
+  /* display: block; */
+  color: yellowgreen;
+  /* color: white; */
+  width: 50%;
+  transform: translate(16%, -120%);
+  /* padding: 10px; */
+  /* margin-left: 60px; */
+  /* border:1px solid black; */
+}
+
+.form{
+  width: 100%;
+  height: 60%;
+  /* border: 1px solid black; */
+  transform: translateY(-10%);
+}
+
+.inputArea {
+  width: 100%;
+  height: 20%;
+  /* transform: translateX(-17%); */
+  /* margin-left: -60px; */
+  /* padding: 0.5rem; */
+  padding: 8px;
+  margin-top: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  /* border:1px solid black; */
+}
+
+.inputArea::placeholder{
+  /* border: 1px solid #ccc; */
+  color: #ccc;
+}
+
+.inputArea:focus{
+  outline: 1px solid #878787;
+}
+
+.forgotPassword {
+  /* margin-left: -59px; */
+  /* padding: 1px; */
+  /* height: 20%; */
+  /* margin-top: -15px; */
+  transform: translate(60%, -50%);
+  color: yellowgreen;
+  text-decoration: none;
+  display: block;
+  margin-top: 15px;
+  font-size: small;
+  /* margin-left: -80px; */
+  /* border: 1px solid rgb(189, 20, 20); */
+}
+
+.error {
+  color: red;
+  font-size: small;
+  /* margin-bottom: 1rem; */
+  /* border: 1px solid black; */
+  /* margin: 15px; */
+  /* transform: translate(-55%, 15%); */
+  /* margin-top: 30px; */
+}
+
+.error-div{
+  /* border: 1px solid black; */
+  display: block;
+  /* transform: translate(-22%, 10%); */
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  /* border: 1px solid black; */
+}
+
+.submitBtn {
+  /* padding: 0.5rem 1rem; */
+  width: 100%;
+  /* width: 300px; */
+  height: 30px;
+  /* padding: 20px; */
+  background-color: #64c759;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  /* border: 1px solid black; */
+}
+
+.submitBtn:hover {
+  background-color: #468e3e;
+}
+
+.footer{
+  display: flex;
+  font-size: smaller;
+  transform: translate(-8%, 20%);
+  /* border: 1px solid black; */
+  /* color: rgb(18, 17, 17); */
+  color: yellowgreen;
+}
+
+/* .Link-login {
+  display: block;
+  text-align: left;
+  color: black;
+  margin-top: 1.2rem;
+  text-decoration: none;
+  border: 1px solid black;
+} */
+
+.Signup-link {
+  /* display: inline-block; */
+  /* text-align: end; */
+  /* color: rgb(18, 17, 17); */
+  color: yellowgreen;
+  /* margin-left: 11rem; */
+  /* margin-bottom: 1.5rem; */
+  text-decoration: none;
+  margin-left: 5px;
+  /* border: 1px solid black; */
+}
+
+.Signup-link:hover{
+  color: rgb(93, 126, 27);
+  text-decoration: underline;
+}
+.forgotPasswordLink {
+  /* display: block; */
+  /* text-align: left; */
+  color: yellowgreen;
+  /* font-size: small; */
+  /* margin-top: 1.2rem; */
+  /* margin-top: 20px; */
+  text-decoration: none;
+  /* border: 1px solid black; */
+}
+
+.forgotPasswordLink:hover {
+  color: rgb(110, 149, 33);
+}
+
+
+/* ---------------------------- Login Section Ends --------------------- */
+
+
+
+/* --------------------------- Signup Section --------------------------- */
+
+.signup-container {
+  display: flex;
+  /* justify-content: center;
+  align-items: center; */
+  height: 100vh;
+  border: 10px solid rgb(42, 77, 113);
+}
+
+.logo-container {
+  width: 50%;
+  background-color: white;
+  border: 10px solid red;
+}
+
+.logo {
+  /* width: 50%; */
+  /* height: 200px; */
+  position: fixed;
+  top: 35%;
+  left: 3%;
+
+  border: 1px solid black;
+ 
+}
+
+.form-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* margin-left: 10px; */
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  overflow-y: auto;
+  border: 10px solid rgb(169, 40, 40);
+  background-color: rgb(255, 255, 255);
+}
+
+.form-card {
+  border: 1px solid rgb(165, 23, 23);
+  border-radius: 4px;
+  /* border-width: 20px; */
+  margin-top: 100px;
+  /* border-color: white; */
+  /* margin-left: 40px; */
+  background-color: white;
+  width: 400px;
+  height: 430px;
+}
+
+.register {
+  /* margin-bottom: 1rem; */
+  margin-top: 10px;
+  color: yellowgreen;
+  width: 70%;
+  padding: 10px;
+  margin-left: 55px;
+  /* border: 1px solid black; */
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  padding: 5px;
+  /* border: 1px solid black; */
+}
+
+.input-area {
+  width: 95%;
+  margin-left: 10px;
+  padding: 0.5rem;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.input-icon {
+  color: #777;
+  margin-right: 5px;
+  margin-top: 5px;
+  /* border: 1px solid black; */
+  position: relative;
+  bottom: 50%;
+  top: 10%;
+  /* left:10%; */
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-btn {
+  padding: 0.5rem 1rem;
+  background-color: yellowgreen;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.toast-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+}
+
+/* --------------------------- Signup Section Ends --------------------------- */
+
+/* --------------------------- Header Section --------------------------- */
 
 .inNavbar {
   background-color: #fff;
@@ -37,24 +363,14 @@ body {
 }
 
 .inNavbar .inLogo {
-  
   width: 200px;
   height: 50px;
   cursor: pointer;
- 
 }
 
 .inNavbar .inLogo:hover {
   color: #b794f4;
 }
-
-
-
-
-
-
-
-
 
 .inIcon {
   color: #4a5568;
@@ -104,7 +420,8 @@ body {
   margin: 0.75rem;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  box-shadow: 0 0px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
 }
 
 .profileWrapper .profileData {
@@ -204,7 +521,6 @@ body {
 }
 
 @media (min-width: 48em) {
-  
   .inSearch {
     display: block;
   }
@@ -214,29 +530,25 @@ body {
   }
 }
 
-
 /* --------------------------- Header End --------------------------- */
 
-
-
-.post-card{
+.post-card {
   border-radius: 10px; /* Adjust the radius value to control the roundness of the corners */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: Add a box shadow for a visual effect */
   padding: 20px;
   border-color: #ffffff;
-  width:30%;
+  width: 30%;
   background-color: rgb(253, 253, 253);
- 
 }
-.selected-image{
+.selected-image {
   width: 50%;
   height: 10%;
   border-radius: 8px;
 }
-.calendar-icon{
+.calendar-icon {
   margin-left: 10px;
 }
-.location-icon{
+.location-icon {
   margin-left: 10px;
 }
 .tweet-button {
@@ -244,23 +556,23 @@ body {
   margin-left: 30px;
   color: white;
   border-radius: 9999px;
-  border-color:#000000c6;
+  border-color: #000000c6;
   padding: 0.5rem 1rem;
   font-weight: bold;
-  box-shadow: 2px 2px 2px 2px  #ffffff;
+  box-shadow: 2px 2px 2px 2px #ffffff;
   transition: background-color 0.3s ease;
   cursor: pointer;
 }
- 
+
 .tweet-button:hover {
   background-color: #1a8cd8;
 }
- 
+
 .tweet-button:disabled {
   opacity: 0.5;
   cursor: default;
 }
- 
+
 .tweet-button:disabled:hover {
   background-color: #1d9bf0;
 }
@@ -271,113 +583,8 @@ body {
   border-color: #ffffff;
   font-size: 20px;
 }
-.emoji-icon{
-  margin-left: 10px;;
-}
-
-
-
-.register{
-  margin-top: -6px;
-  padding: 2px;
-  text-align: center;
-  margin-bottom: 30px;
-
-}
-.register-container {
-  display: flex;
-  width: 100%;
-  padding: 15px;
-  /* margin-top: 10%; */
-  background-color:white;
-  font-family: "Roboto", sans-serif;
-  /* line-height: 1.9; */
-/* border: 1px solid black;  */
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-
-}
-.form-container {
-  width: 50%;
-  height: 82%;
-  margin-bottom: 0px;
-  padding: 40px;
-   border:1px solid;
-  border-style: double;
-  border-color: #ec89a0;
-  background-color: white;
-  border-radius: 5px;
-}
-
-.input-area{
-  width: 98%;
-  padding: 12px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  display: inline-block;
-  background-color: #efe5eed6;
-  border:none;
-  font-size: 1rem;
-  border-radius: 4px;
-  font-family: "Roboto", sans-serif;
-  box-sizing: border-box;
-}
-
-.input-label {
-  line-height: 1.2;
-  margin-bottom: 8px;
-  margin-top: 8px;
-  font-weight: bold;
-  font-family: "Roboto", sans-serif;
-}
-
-.input-field {
-  margin-left: -7px;
-  padding: 10px;
-}
-
-span.error {
-  color: red;
-}
-
-.register-btn {
-  border: none;
-  border-radius: 4px;
-  background-color:#ff3f6c;
-  color:white;
-  font-weight: bold;
-  margin-top:30px;
-  /* // padding: 0.75rem 1rem; */
-  padding: 0.9rem 1.5rem;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  &:hover {
-    background-color:#df2752;
-  }
-}
-.btn-container{
-  display: flex;
-  justify-content: center;
-}
-
-.p{
-  margin-top: 18px;
-  display: flex;
-  cursor: pointer;
-  justify-content:flex-start;
-}
-
-.loginClick{
-cursor: pointer;
-  color:#df2752;
-  margin-left: 5px;
-  &:hover {
-    color:#e15072;
-    text-decoration:underline;
-  }
+.emoji-icon {
+  margin-left: 10px;
 }
 
 .post-card {
@@ -440,7 +647,6 @@ cursor: pointer;
 .emoji-icon {
   margin-left: 10px;
 }
-
 
 /* --------------------------- Left Section --------------------------- */
 
@@ -564,7 +770,8 @@ cursor: pointer;
 }
 
 .createPostWidget.active {
-  box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   border-radius: 1.5rem;
 }
 
