@@ -117,6 +117,7 @@ function SignUp(): JSX.Element {
         </div>
       </div>
       <div className="form-container">
+        <div className="form-wrapper">
         <div className="form-card">
           <h1 className="register">Create Account</h1>
           <div>
@@ -133,7 +134,7 @@ function SignUp(): JSX.Element {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
-            <div>
+            <div className="input-field">
               <div className="input-icon">
                 <FontAwesomeIcon icon={faImage} />
               </div>
@@ -149,7 +150,7 @@ function SignUp(): JSX.Element {
                 onChange={handleImageChange}
               />
             </div>
-            <div>
+            <div className="input-field">
               <div className="input-icon">
                 <FontAwesomeIcon icon={faEnvelope} />
               </div>
@@ -168,7 +169,7 @@ function SignUp(): JSX.Element {
               />
               {/* {emailError && <span={error}>{emailError}</span>} */}
             </div>
-            <div>
+            <div className="input-field">
               {/* <label className="input-label" htmlFor="password">
               Password:
             </label> */}
@@ -185,7 +186,7 @@ function SignUp(): JSX.Element {
               />
               {passwordError && <span>{passwordError}</span>}
             </div>
-            <div>
+            <div className="input-field">
               <div className="input-icon">
                 <FontAwesomeIcon icon={faLock} />
               </div>
@@ -201,7 +202,7 @@ function SignUp(): JSX.Element {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
-            <div>
+            <div className="input-field">
               <div className="input-icon">
                 <FontAwesomeIcon icon={faCalendar} />
               </div>
@@ -217,7 +218,7 @@ function SignUp(): JSX.Element {
                 onChange={(e) => setDateOfBirth(e.target.value)}
               />
             </div>
-            <div>
+            <div className="input-field">
               <div className="input-icon">
                 <FontAwesomeIcon icon={faMapMarkerAlt} />
               </div>
@@ -232,7 +233,7 @@ function SignUp(): JSX.Element {
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
-            <div>
+            <div className="input-field">
               <div className="input-icon">
                 <FontAwesomeIcon icon={faMobile} />
               </div>
@@ -254,6 +255,7 @@ function SignUp(): JSX.Element {
               </button>
             </div>
           </div>
+        </div>
         </div>
         <ToastContainer />
       </div>
