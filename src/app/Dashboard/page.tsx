@@ -67,6 +67,10 @@ const Card: React.FC = () => {
   const handleButtonClick = async () => {
     const id = sessionStorage.getItem("userId");
     const name = sessionStorage.getItem("name");
+     let userImag=sessionStorage.getItem("userImage");
+    // const userDocRef = doc(db, `users/${id}`);
+    //   const userDocSnap = await getDoc(userDocRef);
+      
 
     try {
       let image = null;
@@ -74,8 +78,12 @@ const Card: React.FC = () => {
 
       const userDocRef = doc(db, `users/${id}`);
       const userDocSnap = await getDoc(userDocRef);
+      
       if (userDocSnap.exists()) {
         const userData = userDocSnap.data();
+        console.log("sxsdsssssssssssssssssssssssssssssss00000000000000000",userDocSnap)
+        
+
         if (userData.userImage) {
           userImage = userData.userImage;
         }
@@ -92,7 +100,7 @@ const Card: React.FC = () => {
         name: name,
         text: input,
         image: image,
-        userImage: userImage,
+        userImage: userImag,
         timestamp: serverTimestamp(),
       });
 
@@ -113,6 +121,7 @@ const Card: React.FC = () => {
       <Header />
       <div className="mainContainer">
         <Sidebar />
+        
 
         <div className="mainSection">
           <div
