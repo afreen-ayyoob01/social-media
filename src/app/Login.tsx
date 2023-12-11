@@ -5,7 +5,8 @@ import { getDocs, query, collection, where } from "firebase/firestore";
 import { useRouter } from 'next/navigation';
 import { toast } from "react-toastify";
 import Link from "next/link";
-
+ 
+ 
 function Login(): JSX.Element {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ function Login(): JSX.Element {
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-
+ 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
@@ -105,9 +106,13 @@ function Login(): JSX.Element {
       <img src="assets/image/ss-logo-new.png" alt="Logo" />
       </div>
       </div>
+      {/* <div className="login-card"> */}
       <div className="formContainer">
         <h2 className="title">Login</h2>
-        <form onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit} >
+          <div className="error-div">
+        {error && <span className="error">{error}</span>}
+        </div>
           <div className={"inputField"}>
             {/* <label htmlFor="email" className={"inputLabel"}>Email:</label> */}
             <input
@@ -139,12 +144,14 @@ function Login(): JSX.Element {
           <div className="forgotPassword">
             {/* <span className="forgotPasswordText">Forgot your password?</span> */}
             <Link 
-              className="forgotPasswordLink" href="/forgot-password">Forgot Password?
+              className="forgotPasswordLink" 
+              href="/forgot-password">Forgot Password?
             </Link>
           </div>
-          <div className="checkbox-inputField">
+          {/* <div className="checkbox-inputField">
           <label htmlFor="rememberMe" className="checkbox-inputLabel">
             Remember me:
+            <div className="remember-checkbox">
             <input
               id="rememberMe"
               type="checkbox"
@@ -152,9 +159,10 @@ function Login(): JSX.Element {
               onChange={handleRememberMeChange}
               className="checkboxLabel input"
             />
+            </div>
           </label>
-        </div>
-          {error && <span className={error}>{error}</span>}
+        </div> */}
+          {/* {error && <span className="error">{error}</span>} */}
           <div className={"btnContainer"}>
             <button type="submit"
             className={"submitBtn"}
@@ -164,11 +172,13 @@ function Login(): JSX.Element {
           </div>
  
         </form>
-        <div>
-        <Link className="Link-login" href='/Signup'>Doesn't have an account yet?</Link>
-        <Link className="Signup-link" href='/Signup'>Signup.</Link>
+        <div className="footer">
+        {/* <Link className="Link-login" href='/Signup'>Doesn't have an account yet?</Link> */}
+        <p>Don't have an account?</p>
+        <Link className="Signup-link" href='/Signup'>Signup Here!</Link>
         </div>
       </div>
+      {/* </div> */}
     </div>
   );
 }
