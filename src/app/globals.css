@@ -545,6 +545,8 @@ body {
 
 /* --------------------------- Header End --------------------------- */
 
+
+
 .post-card {
   border-radius: 10px; /* Adjust the radius value to control the roundness of the corners */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: Add a box shadow for a visual effect */
@@ -774,6 +776,14 @@ body {
 /* --------------------------- Left Section End --------------------------- */
 /*----------------------------Right Section---------------------------------*/
 
+
+.usersHeading{
+  color: #64c759 ;
+  /* border: 1px solid black; */
+  display: block;
+  margin: 10px;
+  margin-left: 56px;
+}
 
 .RightSide {
   background-color: white;
