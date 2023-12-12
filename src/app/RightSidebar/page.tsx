@@ -28,6 +28,7 @@ const UserList: React.FC = () => {
   return (
     <>
       <div className="RightSide">
+        <h2 className="usersHeading">Users</h2>
         {users.map((user) => (
           <div key={user.id} className="RightSide-card">
             <div className="Right-image">
