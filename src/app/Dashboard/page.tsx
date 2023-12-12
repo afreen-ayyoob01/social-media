@@ -1,5 +1,5 @@
 "use client"
-
+ 
 import React, { useRef, useState } from "react";
 import { GrGallery } from "react-icons/gr";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
@@ -19,7 +19,9 @@ import Sidebar from "../sidebar/page";
 import Header from "../header/page";
 import RootLayout from "../layout";
 import { useClickOutside } from "../useOutsideClick";
+import RightSidebar from "../RightSidebar/page";
 
+ 
 const Card: React.FC = () => {
   console.log("cardpostcbfvhkfehvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
   const [input, setInput] = useState("");
@@ -28,17 +30,17 @@ const Card: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showEmojis, setShowEmojis] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
-
+ 
   const [isFocused, setIsFocused] = useState(false);
   const reff = useRef(null);
   useClickOutside(reff, () => setIsFocused(false));
-
+ 
   const handleImageUpload = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
-
+ 
   const handleFileInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -47,57 +49,65 @@ const Card: React.FC = () => {
       setSelectedImage(file);
     }
   };
-
+ 
   const handleEmojiSelect = (emoji: any) => {
     const { native } = emoji;
     setInput(input + native);
     setShowEmojis(false);
   };
-
+ 
   const handleDateSelect = (date: Date | null) => {
     setSelectedDate(date);
     setInput(date ? input + date.toLocaleDateString() : input);
     setShowCalendar(false);
   };
-
+ 
   const handleCalendarToggle = () => {
     setShowCalendar(!showCalendar);
   };
-
+ 
   const handleButtonClick = async () => {
     const id = sessionStorage.getItem("userId");
     const name = sessionStorage.getItem("name");
-
+     let userImag=sessionStorage.getItem("userImage");
+    // const userDocRef = doc(db, `users/${id}`);
+    //   const userDocSnap = await getDoc(userDocRef);
+     
+ 
     try {
       let image = null;
       let userImage = null;
-
+ 
       const userDocRef = doc(db, `users/${id}`);
       const userDocSnap = await getDoc(userDocRef);
+     
       if (userDocSnap.exists()) {
         const userData = userDocSnap.data();
+        console.log("sxsdsssssssssssssssssssssssssssssss00000000000000000",userDocSnap)
+       
+ 
         if (userData.userImage) {
           userImage = userData.userImage;
         }
       }
-
+ 
       if (selectedImage) {
         const storageRef = ref(storage, `images/${id}/${selectedImage.name}`);
         const snapshot = await uploadBytes(storageRef, selectedImage);
         image = await getDownloadURL(snapshot.ref);
       }
-
+ 
       const docRef = await addDoc(collection(db, "posts"), {
         userId: id,
         name: name,
         text: input,
         image: image,
-        userImage: userImage,
+        userImage: userImag,
         timestamp: serverTimestamp(),
       });
-
+ 
       console.log("Post created with ID: ", docRef.id);
-
+ 
       setInput("");
       setSelectedImage(null);
       console.log("userimage",userImage)
@@ -105,7 +115,7 @@ const Card: React.FC = () => {
     } catch (err) {
       console.error("Error creating post: ", err);
     }
-    
+   
   };
   console.log("xshgggggggggggggggggggggggggggggggggxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
   return (
@@ -113,7 +123,8 @@ const Card: React.FC = () => {
       <Header />
       <div className="mainContainer">
         <Sidebar />
-
+      
+ 
         <div className="mainSection">
           <div
             ref={reff}
@@ -136,6 +147,7 @@ const Card: React.FC = () => {
             null
           )}
         </label>
+        <div className="button-icon">
         <GrGallery style={{ color: "green" }}className="gallery-icon" onClick={handleImageUpload} />
               <input
                 id="file-input"
@@ -154,7 +166,7 @@ const Card: React.FC = () => {
                 onClick={handleCalendarToggle}
               />
               <HiOutlineLocationMarker className="location-icon" />
-
+ 
               <button
                 className="inBtn"
                 disabled={!input.trim() && !selectedImage}
@@ -162,6 +174,7 @@ const Card: React.FC = () => {
               >
                 Post
               </button>
+              </div>
             </div>
             {showEmojis && (
               <div>
@@ -182,11 +195,17 @@ const Card: React.FC = () => {
               </div>
             )}
           </div>
+       
           <PostList />
+
+         
+
         </div>
+        <RightSidebar/>
       </div>
+     
     </div>
   );
 };
-
+ 
 export default Card;
