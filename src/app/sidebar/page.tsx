@@ -28,6 +28,10 @@ export interface User {
   postImg: string;
 }
 
+interface SidebarProps {
+  activateCreatePost: () => void;
+}
+
 const links: LinkItem[] = [
   {
     name: "Home",
@@ -59,76 +63,44 @@ const links: LinkItem[] = [
   },
 ];
 
-const Sidebar: React.FC = () => {
-  let currentUserId: string | null = null;
+const Sidebar: React.FC<SidebarProps>= ({ activateCreatePost }) => {
+  const [storedUserImage, setStoredUserImage] = useState<string | null>(null);
+  const [storedName, setStoredName] = useState<string | null>(null);
 
-  if (typeof window !== "undefined") {
-    currentUserId = sessionStorage.getItem("userId");
-  }
+  useEffect(() => {
+    let currentUserId: string | null = null;
 
-  const storedName = sessionStorage.getItem("name");
-  const storedUserImage = sessionStorage.getItem("userImage");
-  console.log("Stored name:", storedName);
-  console.log("Stored image:", storedUserImage);
-  // const [userData, setUserData] = useState<User[]>([]);
+    if (typeof window !== "undefined") {
+      currentUserId = sessionStorage.getItem("userId");
+    }
+    setStoredUserImage(sessionStorage.getItem("userImage"));
+    setStoredName(sessionStorage.getItem("name"));
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const querySnapshot = await getDocs(collection(db, "user"));
-  //       const usersData = querySnapshot.docs.map((doc) => doc.data() as User);
-  //       console.log("useeffect hook in sidebar");
-  //       console.log(usersData);
-  //       setUserData(usersData);
-  //     } catch (error) {
-  //       console.error("Error fetching data from Firestore:", error);
-  //     }
-  //   };
+    const storedName = sessionStorage.getItem("name");
+    const storedUserImage = sessionStorage.getItem("userImage");
 
-  //   fetchData();
-  // }, [db]);
+    console.log("Stored name:", storedName);
+    console.log("Stored image:", storedUserImage);
+  }, []);
 
   return (
     <div className="leftSection">
       <div className="userProfileWidget">
         <div className="profileImage">
-          {/* Loop through the fetched user data */}
-          {/* {userData.map((user, index) => (
-            <div className="profileWrapper" key={index}>
-              <img
-                src={user.profilePic || "/assets/image/profile-logo.png"}
-                alt="User Profile Pic"
-              />
-            </div>
-          ))} */}
-
           <div className="profileWrapper">
             {storedUserImage && (
               <img src={storedUserImage} alt="User Profile" />
             )}
-            {/* <div className="profileData">
-                    <div className="name">{storedName && <p>{storedName}</p>}</div>
-                    <span className="seeProfile">See Profile</span>
-                  </div> */}
           </div>
         </div>
         <div className="userDetails">
-          <Link href={"/Profile"} passHref>
-            {/* {userData.map((user, index) => (
-              <div className="profileData" key={index}>
-                <div className="name">{user.name}</div>
-              </div>
-            ))} */}
+          <Link href={"/Profile"} className="profileLink" passHref>
             <div className="profileData">
-              <div className="name">{storedName && <p>{storedName}</p>}</div>
-              {/* <span className="seeProfile">See Profile</span> */}
+              <div className="name">
+                {storedName && <p className="para">{storedName}</p>}
+              </div>
             </div>
           </Link>
-          {/* {userData.map((user, index) => (
-            <div className="username" key={index}>
-              {user.username}
-            </div>
-          ))} */}
         </div>
       </div>
 
@@ -139,13 +111,9 @@ const Sidebar: React.FC = () => {
             <h3>{link.name}</h3>
           </div>
         ))}
-
-        {/* <label htmlFor="createNewPost" className="inBtn sidebarCreateBtn">
-          Create Post
-        </label> */}
       </div>
 
-      <label htmlFor="createNewPost" className="inBtn sidebarCreateBtn">
+      <label htmlFor="createNewPost" className="inBtn sidebarCreateBtn"  onClick={activateCreatePost}>
         Create Post
       </label>
     </div>
