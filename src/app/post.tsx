@@ -12,6 +12,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { db } from "./config/firebase";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaEllipsisH } from "react-icons/fa";
 import {
   HiOutlineBookmark,
@@ -19,7 +20,7 @@ import {
   HiOutlineShare,
 } from "react-icons/hi";
 import { HiOutlineChatBubbleOvalLeftEllipsis } from "react-icons/hi2";
-
+ 
 interface Post {
   id: string;
   postId?: string;
@@ -33,9 +34,11 @@ interface Post {
   friendName?: string;
   commentNameImage?: string;
   bookmarked?: boolean;
-  likes:number;
+  likes: number;
+  liked: boolean;
+  // likeCount?:number;
 }
-
+ 
 const PostList: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [textInput, setTextInput] = useState("");
@@ -47,8 +50,9 @@ const PostList: React.FC = () => {
     { postId: string; comment: string; commentName: string }[]
   >([]);
   const [showCommentBox, setShowCommentBox] = useState(false);
-  
 
+
+ 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -58,10 +62,11 @@ const PostList: React.FC = () => {
         );
         const postData = querySnapshot.docs.map((doc) => {
           const post = doc.data() as Post;
-          return { ...post, postId: doc.id,likes:0 };
+          // console.log("=====================================", post.likeCount);
+          return { ...post, postId: doc.id, liked: false,  likes: post.likes || 0 }
         });
         setPosts(postData);
-
+ 
         const commentsSnapshot = await getDocs(collection(db, "comments"));
         const commentsData = commentsSnapshot.docs.map((doc) => {
           const comment = doc.data() as {
@@ -76,9 +81,9 @@ const PostList: React.FC = () => {
         console.error("Error fetching posts and comments: ", err);
       }
     };
-
-    
-
+ 
+   
+ 
     const unsubscribe = onSnapshot(
       query(collection(db, "posts"), orderBy("timestamp", "desc")),
       (snapshot) => {
@@ -94,13 +99,13 @@ const PostList: React.FC = () => {
         setPosts(updatedPosts);
       }
     );
-
+ 
     fetchPosts();
-
+ 
     return () => unsubscribe();
   }, []);
-
-  
+ 
+ 
   const handleBookmark = async (
     postId: string,
     image: string,
@@ -109,7 +114,7 @@ const PostList: React.FC = () => {
     try {
       const postRef = doc(db, "posts", postId);
       await setDoc(postRef, { bookmarked: true, likes: 1 }, { merge: true });
-
+ 
       await addDoc(collection(db, "savedPosts"), {
         postId,
         image,
@@ -119,18 +124,18 @@ const PostList: React.FC = () => {
       console.error("Error saving bookmark: ", err);
     }
   };
-
+ 
   const commentUserName = sessionStorage.getItem("name");
   const commentUserImage = sessionStorage.getItem("userImage");
-
-
+ 
+ 
   const handleSubmit = async (postId: string, friendName: string) => {
     try {
       if (!commentUserName) {
         console.error("Error: commentUserName is undefined");
         return;
       }
-
+ 
       const newComment = {
         comment: textInput,
         postId: postId,
@@ -138,9 +143,9 @@ const PostList: React.FC = () => {
         friendName: friendName,
         commentNameImage: commentUserImage,
       };
-
+ 
       await addDoc(collection(db, "comments"), newComment);
-
+ 
       setTextInput("");
       setComments([
         ...comments,
@@ -155,24 +160,36 @@ const PostList: React.FC = () => {
     }
   };
 
-  const toggleCommentBox = () => {
-    setShowCommentBox((prevShowCommentBox) => !prevShowCommentBox);
-  };
-
-  
-  const handleLike = async () => {
+  const handleLike = async (
+    postId: string,
+    liked: boolean,
+    likeCount: number
+  ) => {
     try {
       const updatedLikeCount = liked ? likeCount - 1 : likeCount + 1;
-      setLikeCount(updatedLikeCount);
-      setLiked(!liked);
-
-      const postRef = doc(db, "posts", postId!);
+  
+      const postRef = doc(db, "posts", postId);
       await updateDoc(postRef, { likes: updatedLikeCount });
+  
+      const updatedPosts = posts.map((post) => {
+        if (post.postId === postId) {
+          return { ...post, liked: !liked, likes: updatedLikeCount };
+        }
+        return post;
+      });
+      setPosts(updatedPosts);
     } catch (err) {
       console.error("Error updating like: ", err);
     }
   };
 
+
+  const toggleCommentBox = () => {
+    setShowCommentBox((prevShowCommentBox) => !prevShowCommentBox);
+  };
+ 
+
+ 
   return (
     <>
       <div className="postWrapper">
@@ -204,7 +221,15 @@ const PostList: React.FC = () => {
             </div>
             <div className="post-actions">
               <div className="left">
-                <HiOutlineHeart />
+             
+              <button onClick={() => handleLike(post.postId, post.liked, post.likes)} className="like-button">
+  {post.liked ? (
+    <AiFillHeart className="heart-icon filled" />
+  ) : (
+    <AiOutlineHeart className="heart-icon" />
+  )}
+</button>
+
                 <HiOutlineChatBubbleOvalLeftEllipsis
                   onClick={toggleCommentBox}
                 />
@@ -226,7 +251,11 @@ const PostList: React.FC = () => {
                   />
                 )}
               </div>
+             
             </div>
+            <div className="likes-count-container">
+      <span className="likes-count">{post.likes} likes</span>
+      </div>
             {showCommentBox && (
               <div className="comment-box">
                 <div className="comment-box-header">
@@ -274,5 +303,5 @@ const PostList: React.FC = () => {
     </>
   );
 };
-
+ 
 export default PostList;
