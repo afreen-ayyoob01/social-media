@@ -22,7 +22,9 @@ import { useClickOutside } from "../useOutsideClick";
 import RightSidebar from "../RightSidebar/page";
 
 const Card: React.FC = () => {
+
   // console.log("cardpostcbfvhkfehvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
+
   const [input, setInput] = useState("");
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -34,11 +36,13 @@ const Card: React.FC = () => {
   const reff = useRef(null);
   useClickOutside(reff, () => setIsFocused(false));
 
+
   const [isCreatePostActive, setIsCreatePostActive] = useState<boolean>(false);
 
   const activateCreatePost = () => {
     setIsCreatePostActive(true);
   };
+
 
   const handleImageUpload = () => {
     if (fileInputRef.current) {
@@ -75,8 +79,10 @@ const Card: React.FC = () => {
     const id = sessionStorage.getItem("userId");
     const name = sessionStorage.getItem("name");
     let userImag = sessionStorage.getItem("userImage");
+
     // const userDocRef = doc(db, `users/${id}`);
     //   const userDocSnap = await getDoc(userDocRef);
+
 
     try {
       let image = null;
@@ -87,7 +93,9 @@ const Card: React.FC = () => {
 
       if (userDocSnap.exists()) {
         const userData = userDocSnap.data();
+
         // console.log("sxsdsssssssssssssssssssssssssssssss00000000000000000",userDocSnap)
+
 
         if (userData.userImage) {
           userImage = userData.userImage;
@@ -119,16 +127,20 @@ const Card: React.FC = () => {
       console.error("Error creating post: ", err);
     }
   };
+
   // console.log("xshgggggggggggggggggggggggggggggggggxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+
   return (
     <div className="dashboard">
       <div className="headerContainer">
         <Header />
       </div>
       <div className="mainContainer">
+
         <div className="leftSidebarContainer">
           <Sidebar activateCreatePost={activateCreatePost} />
         </div>
+
 
         <div className="mainSection">
           <div
@@ -206,6 +218,7 @@ const Card: React.FC = () => {
               </div>
             )}
           </div>
+
           <div className="postContainer">
             <PostList />
           </div>
@@ -213,6 +226,7 @@ const Card: React.FC = () => {
         <div className="rightSidebarContainer">
           <RightSidebar />
         </div>
+
       </div>
     </div>
   );
