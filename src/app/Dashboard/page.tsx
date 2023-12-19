@@ -120,7 +120,7 @@ const Card: React.FC = () => {
   console.log("xshgggggggggggggggggggggggggggggggggxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className="mainContainer">
         <Sidebar />
       

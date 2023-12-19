@@ -369,6 +369,10 @@ body {
   align-items: center;
   padding: 1rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  /* position: fixed;
+  top: 0;
+  left: 0;
+  right: 0; */
   /* border: 1px solid black; */
 }
 
@@ -445,16 +449,26 @@ body {
 
 .profileWrapper .profileData .name {
   font-weight: 600;
+  text-decoration: none;
 }
 
 .profileWrapper .profileData span {
   font-size: 0.7rem;
   cursor: pointer;
   transition: color 0.3s ease;
+  text-decoration: none;
 }
 
+.profileData p{
+  text-decoration: none;
+}
+
+.profileLink{
+  text-decoration: none;
+}
 .profileWrapper .profileData span:hover {
-  color: #805ad5;
+  /* color: #805ad5; */
+  color: #468e3e;
 }
 
 .userImage img,

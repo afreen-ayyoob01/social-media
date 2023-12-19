@@ -60,7 +60,7 @@ const links: LinkItem[] = [
 ];
 
 const Sidebar: React.FC = () => {
-  let currentUserId: string | null = null;
+  let currentUserId: string | null;
 
   if (typeof window !== "undefined") {
     currentUserId = sessionStorage.getItem("userId");
@@ -113,14 +113,16 @@ const Sidebar: React.FC = () => {
           </div>
         </div>
         <div className="userDetails">
-          <Link href={"/Profile"} passHref>
+          <Link href={"/Profile"}
+          className="profileLink"
+          passHref>
             {/* {userData.map((user, index) => (
               <div className="profileData" key={index}>
                 <div className="name">{user.name}</div>
               </div>
             ))} */}
             <div className="profileData">
-              <div className="name">{storedName && <p>{storedName}</p>}</div>
+              <div className="name">{storedName && <p className="para">{storedName}</p>}</div>
               {/* <span className="seeProfile">See Profile</span> */}
             </div>
           </Link>
