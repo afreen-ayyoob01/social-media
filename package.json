@@ -21,7 +21,7 @@
     "firebase": "^10.7.0",
     "framer-motion": "^10.16.14",
     "gif-meme-fetcher": "^2.0.2",
-    "next": "14.0.3",
+    "next": "^14.0.4",
     "react": "^18",
     "react-bootstrap": "^2.9.1",
     "react-datepicker": "^4.24.0",
