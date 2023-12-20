@@ -37,11 +37,11 @@ const Card: React.FC = () => {
   useClickOutside(reff, () => setIsFocused(false));
 
 
-  const [isCreatePostActive, setIsCreatePostActive] = useState<boolean>(false);
+  // const [isCreatePostActive, setIsCreatePostActive] = useState<boolean>(false);
 
-  const activateCreatePost = () => {
-    setIsCreatePostActive(true);
-  };
+  // const activateCreatePost = () => {
+  //   setIsCreatePostActive(true);
+  // };
 
 
   const handleImageUpload = () => {
@@ -138,7 +138,7 @@ const Card: React.FC = () => {
       <div className="mainContainer">
 
         <div className="leftSidebarContainer">
-          <Sidebar activateCreatePost={activateCreatePost} />
+          <Sidebar />
         </div>
 
 
@@ -154,7 +154,7 @@ const Card: React.FC = () => {
                 placeholder="What's Happening?"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                // id="createNewPost"
+                id="createNewPost"
                 onFocus={() => setIsFocused(true)}
               />
               <label htmlFor="file-input" className="file-input-label">
@@ -168,7 +168,7 @@ const Card: React.FC = () => {
               </label>
               <div className="button-icon">
                 <GrGallery
-                  style={{ color: "green" }}
+                  // style={{ color: "green" }}
                   className="gallery-icon"
                   onClick={handleImageUpload}
                 />
