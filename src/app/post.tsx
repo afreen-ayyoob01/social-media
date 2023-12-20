@@ -12,13 +12,16 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { db } from "./config/firebase";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaEllipsisH } from "react-icons/fa";
-import {
-  HiOutlineBookmark,
-  HiOutlineHeart,
-  HiOutlineShare,
-} from "react-icons/hi";
-import { HiOutlineChatBubbleOvalLeftEllipsis } from "react-icons/hi2";
+import { FaRegBookmark } from "react-icons/fa";
+import { FaBookmark } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+import { FaRegCommentDots } from "react-icons/fa6";
+import { FiShare2 } from "react-icons/fi";
+import { AiOutlineClose } from "react-icons/ai";
+import {HiOutlineChatBubbleOvalLeftEllipsis} from "react-icons/hi2"
 
 interface Post {
   id: string;
@@ -33,7 +36,9 @@ interface Post {
   friendName?: string;
   commentNameImage?: string;
   bookmarked?: boolean;
-  likes:number;
+  likes: number;
+  liked: boolean;
+  // likeCount?:number;
 }
 
 const PostList: React.FC = () => {
@@ -47,7 +52,6 @@ const PostList: React.FC = () => {
     { postId: string; comment: string; commentName: string }[]
   >([]);
   const [showCommentBox, setShowCommentBox] = useState(false);
-  
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -58,7 +62,13 @@ const PostList: React.FC = () => {
         );
         const postData = querySnapshot.docs.map((doc) => {
           const post = doc.data() as Post;
-          return { ...post, postId: doc.id,likes:0 };
+          // console.log("=====================================", post.likeCount);
+          return {
+            ...post,
+            postId: doc.id,
+            liked: false,
+            likes: post.likes || 0,
+          };
         });
         setPosts(postData);
 
@@ -76,8 +86,6 @@ const PostList: React.FC = () => {
         console.error("Error fetching posts and comments: ", err);
       }
     };
-
-    
 
     const unsubscribe = onSnapshot(
       query(collection(db, "posts"), orderBy("timestamp", "desc")),
@@ -100,7 +108,6 @@ const PostList: React.FC = () => {
     return () => unsubscribe();
   }, []);
 
-  
   const handleBookmark = async (
     postId: string,
     image: string,
@@ -122,7 +129,6 @@ const PostList: React.FC = () => {
 
   const commentUserName = sessionStorage.getItem("name");
   const commentUserImage = sessionStorage.getItem("userImage");
-
 
   const handleSubmit = async (postId: string, friendName: string) => {
     try {
@@ -155,22 +161,31 @@ const PostList: React.FC = () => {
     }
   };
 
-  const toggleCommentBox = () => {
-    setShowCommentBox((prevShowCommentBox) => !prevShowCommentBox);
-  };
-
-  
-  const handleLike = async () => {
+  const handleLike = async (
+    postId: string,
+    liked: boolean,
+    likeCount: number
+  ) => {
     try {
       const updatedLikeCount = liked ? likeCount - 1 : likeCount + 1;
-      setLikeCount(updatedLikeCount);
-      setLiked(!liked);
 
-      const postRef = doc(db, "posts", postId!);
+      const postRef = doc(db, "posts", postId);
       await updateDoc(postRef, { likes: updatedLikeCount });
+
+      const updatedPosts = posts.map((post) => {
+        if (post.postId === postId) {
+          return { ...post, liked: !liked, likes: updatedLikeCount };
+        }
+        return post;
+      });
+      setPosts(updatedPosts);
     } catch (err) {
       console.error("Error updating like: ", err);
     }
+  };
+
+  const toggleCommentBox = () => {
+    setShowCommentBox((prevShowCommentBox) => !prevShowCommentBox);
   };
 
   return (
@@ -179,7 +194,7 @@ const PostList: React.FC = () => {
         {posts.map((post) => (
           <div key={post.id} className="post-card">
             <div className="header">
-              <div className="left">
+              <div className="left-profile">
                 {post.userImage && (
                   <img
                     src={post.userImage}
@@ -203,22 +218,49 @@ const PostList: React.FC = () => {
               )}
             </div>
             <div className="post-actions">
-              <div className="left">
-                <HiOutlineHeart />
-                <HiOutlineChatBubbleOvalLeftEllipsis
+              <div className="left-icons">
+                <div className="icons">
+                <button
+                  onClick={() =>
+                    handleLike(post.postId, post.liked, post.likes)
+                  }
+                  className="like-button"
+                  // className="icons"
+                >
+                  {post.liked ? (
+                    <FaHeart  className = "heart"
+                    />
+                    // <AiFillHeart 
+                    // // onClick = {() =>}
+                    // // className="heart-icon filled" 
+                    // />
+                  ) : (
+                    <FaRegHeart className = "heart"
+                    />
+                    // <AiOutlineHeart 
+                    // // className="heart-icon" 
+                    // />
+                  )}
+                </button>
+                </div>
+                    <div className="icons">
+                <FaRegCommentDots 
                   onClick={toggleCommentBox}
                 />
-                <HiOutlineShare />
+                </div>
+                <div className="icons">
+                  <FiShare2 />
+                </div>
               </div>
               <div className="right">
                 {!post.bookmarked ? (
-                  <HiOutlineBookmark
+                  <FaRegBookmark
                     onClick={() =>
                       handleBookmark(post.postId, post.image, post.commentName)
                     }
                   />
                 ) : (
-                  <HiOutlineBookmark
+                  <FaBookmark
                     className="bookmarked"
                     onClick={() =>
                       handleBookmark(post.postId, post.image, post.commentName)
@@ -227,11 +269,17 @@ const PostList: React.FC = () => {
                 )}
               </div>
             </div>
+            
+            <div className="likes-count-container">
+              <span className="likes-count">{post.likes} likes</span>
+            </div>
             {showCommentBox && (
               <div className="comment-box">
                 <div className="comment-box-header">
                   <h4>Comments</h4>
-                  <button onClick={toggleCommentBox}>Close</button>
+                  <button onClick={toggleCommentBox}>
+                    <AiOutlineClose />
+                  </button>
                 </div>
                 <div className="comment-list">
                   {comments
