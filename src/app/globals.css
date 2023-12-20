@@ -1,9 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Playfair+Display:wght@500&family=Roboto:wght@300;400&display=swap');
+
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'Roboto', sans-serif;
   /* border: 1px solid black; */
 }
 
@@ -562,7 +566,7 @@ body {
 
 /* ------------------------------------------Dashbord Starts ------------------------------------------------- */
 .dashboard{
-  border: 1px solid black;
+  border: 1px solid rgb(255, 255, 255);
   /* width: 100vw; */
   /* height: 100vh; */
   /* overflow:hidden; */
@@ -609,11 +613,13 @@ body {
 /* border: 1px solid black; */
 
 position: fixed;
-top: 200;
+top: 80px;
 left: 80;
 /* right: 20; */
-z-index: 9999;
+z-index: 99;
 margin-left: 20px;
+height: 80vh;
+overflow-y: auto;
 }
 
 /* -------------------Left Sidebar Container Ends--------------------------- */
@@ -629,7 +635,7 @@ top: 80px;
 right: 0;
 z-index: 99;
 margin-right: 20px;
-height: 100vh;
+height: 80vh;
 overflow-y: auto;
 /* padding: 10px;  */
 }
@@ -785,7 +791,7 @@ overflow-y: auto;
   max-width: var(--max-mainSection);
   margin-left: 2px;
   margin-right: auto;
-  /* border: 2px solid black; */
+  border: 1px solid black;
   /* overflow-y: scroll; */
 
   width: 50%;
@@ -798,47 +804,55 @@ overflow-y: auto;
 /* ::-webkit-scrollbar {
   height: 0;
 } */
-
+/* ------------------------ Create Post Section Starts ----------------------------------------- */
 .createPostWidget {
   height: auto;
-  margin-top: 3px;
-  margin-right: 4px;
-  /* width:90%; */
+  /* margin-top: 3px; */
+  /* margin-right: 4px; */
+  /* width:90%;------- */
   background-color: white;
-  border-radius: 9999px;
+  border-radius: 10px;
   position: relative;
+  box-shadow: 0 2px 4px rgba(168, 168, 168, 0.2);
+  /* border: 1px solid black; */
 }
 
 
 
 .createPostWidget.active {
-  box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border-radius: 1.5rem;
+  box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.146),
+    0 2px 4px -1px rgba(0, 0, 0, 0.219);
+  /* border-radius: 1.5rem; */
 }
 
 .createPostWidget .createInput {
   width: 100%;
-  /* height: auto;
-  display: flex; */
+  /* height: auto;----
+  display: flex;--- */
   height: auto;
   padding: 8px 12px;
   margin-top: 5px;
   justify-content: space-between;
+  /* border: 1px solid rgb(148, 67, 67); */
 }
 
-/* ----------------------Main Section End ------------------------------ */
-
-/* ------------------------ Create Post Section Starts ----------------------------------------- */
-
-.post-card {
-  border-radius: 10px; /* Adjust the radius value to control the roundness of the corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: Add a box shadow for a visual effect */
-  padding: 20px;
+.createPostWidget .createInput .textarea {
+  width: 100%;
+  resize: none;
+  background-color: transparent;
+  outline-color: #ffffff;
   border-color: #ffffff;
-  width: 30%;
-  background-color: rgb(253, 253, 253);
+  /* border: 1px solid black; */
+  font-size: 16px;
 }
+
+.createPostWidget .createInput .textarea::placeholder{
+  color: #b5b5b5;
+}
+
+
+
+
 .selected-image {
   width: 50%;
   height: 10%;
@@ -850,22 +864,9 @@ overflow-y: auto;
   /* width:10%; */
   /* border: 1px solid black; */
 }
-.calendar-icon {
-  margin-left: 10px;
-  /* border: 1px solid black; */
-}
-.location-icon {
-  margin-left: 10px;
-  /* border: 1px solid black; */
-}
 
-.textarea {
-  width: 100%;
-  background-color: transparent;
-  outline-color: #ffffff;
-  border-color: #ffffff;
-  font-size: 20px;
-}
+
+
 .emoji-icon {
   margin-left: 10px;
   /* border:1px solid black; */
@@ -880,15 +881,9 @@ overflow-y: auto;
   height: auto;
   margin-bottom: 8px;
   background-color: rgb(253, 253, 253);
-  /* border: 1px solid black; */
+  border: 1px solid black;
 }
 
-.selected-image {
-  width: 40%;
-  height: 10%;
-  border-radius: 8px;
-  /* border: 1px solid black; */
-}
 
 .calendar-icon {
   margin-left: 10px;
@@ -896,6 +891,7 @@ overflow-y: auto;
 
 .location-icon {
   margin-left: 10px;
+  margin-right: 10px;
 }
 
 
@@ -913,13 +909,10 @@ overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  /* border: 1px solid black; */
+  margin-top: 30px;
 }
 
-.post-card {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 16px;
-}
 
 .header {
   display: flex;
@@ -928,9 +921,25 @@ overflow-y: auto;
   margin-bottom: 8px;
 }
 
-.left {
+.left-profile {
   display: flex;
   align-items: center;
+  /* border: 1px solid black; */
+}
+
+.left-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 1px solid black; */
+  /* margin: 2px; */
+}
+
+.icons{
+  /* border: 1px solid black; */
+  margin: 3px;
+  padding: 2px;
+  cursor: pointer;
 }
 
 .profilepicture {
@@ -938,6 +947,7 @@ overflow-y: auto;
   height: 36px;
   border-radius: 50%;
   margin-right: 8px;
+  /* border: 1px solid black; */
 }
 
 .name {
@@ -956,10 +966,14 @@ overflow-y: auto;
 
 .right {
   cursor: pointer;
+  /* color: black; */
+
 }
 
 .post-content p {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  margin-top: 35px;
+  /* border: 1px solid black; */
 }
 
 .post-image {
@@ -974,20 +988,24 @@ overflow-y: auto;
   align-items: center;
   justify-content: space-between;
   margin-top: 16px;
+
 }
 
 .left svg,
 .right svg {
   cursor: pointer;
+  /* border: 1px solid black; */
 }
 
 /* --------------------------- Post End --------------------------- */
 
 
 /*---------------------------------CommentBox section---------------------------------*/
-.bookmarked {
-  color: red;
-}
+/* .bookmarked {
+  color: #ff0000;
+} */
+
+
 
 .comment-box {
   border: 1px solid #ccc;
@@ -1082,11 +1100,11 @@ overflow-y: auto;
 margin-left: 20rem;
 }
 
-.post-card {
+/* .post-card {
   border: 1px solid #ccc;
   padding: 10px;
   margin-bottom: 10px;
-}
+} */
 
 .post-card h3 {
   font-size: 18px;
@@ -1103,7 +1121,7 @@ margin-left: 20rem;
 
 /* --------------------------- Post End --------------------------- */
 
-
+/* ----------------------Main Section End ------------------------------ */
 /*----------------------------Right SideBar Section Starts---------------------------------*/
 
 

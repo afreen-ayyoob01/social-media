@@ -13,12 +13,13 @@ import {
 } from "firebase/firestore";
 import { db } from "./config/firebase";
 import { FaEllipsisH } from "react-icons/fa";
-import {
-  HiOutlineBookmark,
-  HiOutlineHeart,
-  HiOutlineShare,
-} from "react-icons/hi";
-import { HiOutlineChatBubbleOvalLeftEllipsis } from "react-icons/hi2";
+import { FaRegBookmark } from "react-icons/fa";
+import { FaBookmark } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+import { FaRegCommentDots } from "react-icons/fa6";
+import { FiShare2 } from "react-icons/fi";
+import { AiOutlineClose } from "react-icons/ai";
 
 interface Post {
   id: string;
@@ -179,7 +180,7 @@ const PostList: React.FC = () => {
         {posts.map((post) => (
           <div key={post.id} className="post-card">
             <div className="header">
-              <div className="left">
+              <div className="left-profile">
                 {post.userImage && (
                   <img
                     src={post.userImage}
@@ -203,22 +204,29 @@ const PostList: React.FC = () => {
               )}
             </div>
             <div className="post-actions">
-              <div className="left">
-                <HiOutlineHeart />
-                <HiOutlineChatBubbleOvalLeftEllipsis
+              <div className="left-icons">
+                <div className="icons">
+              <FaRegHeart />
+              {/* <FaHeart /> */}
+              </div>
+              <div className="icons"> 
+              <FaRegCommentDots 
                   onClick={toggleCommentBox}
                 />
-                <HiOutlineShare />
+                </div>
+                <div className="icons">
+                <FiShare2 />
+                </div>
               </div>
               <div className="right">
                 {!post.bookmarked ? (
-                  <HiOutlineBookmark
+                  <FaRegBookmark
                     onClick={() =>
                       handleBookmark(post.postId, post.image, post.commentName)
                     }
                   />
                 ) : (
-                  <HiOutlineBookmark
+                  <FaBookmark
                     className="bookmarked"
                     onClick={() =>
                       handleBookmark(post.postId, post.image, post.commentName)
@@ -231,7 +239,7 @@ const PostList: React.FC = () => {
               <div className="comment-box">
                 <div className="comment-box-header">
                   <h4>Comments</h4>
-                  <button onClick={toggleCommentBox}>Close</button>
+                  <button onClick={toggleCommentBox}><AiOutlineClose /></button>
                 </div>
                 <div className="comment-list">
                   {comments

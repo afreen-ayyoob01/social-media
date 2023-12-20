@@ -28,9 +28,9 @@ export interface User {
   postImg: string;
 }
 
-interface SidebarProps {
-  activateCreatePost: () => void;
-}
+// interface SidebarProps {
+//   activateCreatePost: () => void;
+// }
 
 const links: LinkItem[] = [
   {
@@ -63,9 +63,10 @@ const links: LinkItem[] = [
   },
 ];
 
-const Sidebar: React.FC<SidebarProps>= ({ activateCreatePost }) => {
+const Sidebar: React.FC= () => {
   const [storedUserImage, setStoredUserImage] = useState<string | null>(null);
   const [storedName, setStoredName] = useState<string | null>(null);
+ 
 
   useEffect(() => {
     let currentUserId: string | null = null;
@@ -82,6 +83,10 @@ const Sidebar: React.FC<SidebarProps>= ({ activateCreatePost }) => {
     console.log("Stored name:", storedName);
     console.log("Stored image:", storedUserImage);
   }, []);
+
+
+  
+
 
   return (
     <div className="leftSection">
@@ -113,7 +118,7 @@ const Sidebar: React.FC<SidebarProps>= ({ activateCreatePost }) => {
         ))}
       </div>
 
-      <label htmlFor="createNewPost" className="inBtn sidebarCreateBtn"  onClick={activateCreatePost}>
+      <label htmlFor="createNewPost" className="inBtn sidebarCreateBtn"  >
         Create Post
       </label>
     </div>
