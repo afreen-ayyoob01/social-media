@@ -51,6 +51,8 @@ const PostList: React.FC = () => {
   >([]);
   const [showCommentBox, setShowCommentBox] = useState(false);
 
+  const [sharedPosts, setSharedPosts] = useState<string[]>([]);
+
 
  
   useEffect(() => {
@@ -62,7 +64,6 @@ const PostList: React.FC = () => {
         );
         const postData = querySnapshot.docs.map((doc) => {
           const post = doc.data() as Post;
-          // console.log("=====================================", post.likeCount);
           return { ...post, postId: doc.id, liked: false,  likes: post.likes || 0 }
         });
         setPosts(postData);
@@ -82,8 +83,22 @@ const PostList: React.FC = () => {
       }
     };
  
-   
  
+
+    const fetchSharedPosts = async () => {
+      try {
+        const sharedPostsRef = collection(db, "sharedPosts");
+        const querySnapshot = await getDocs(sharedPostsRef);
+        const sharedPostsData = querySnapshot.docs.map((doc) => doc.data().postId);
+        setSharedPosts(sharedPostsData);
+      } catch (err) {
+        console.error("Error fetching shared posts: ", err);
+      }
+    };
+  
+    fetchSharedPosts();
+  
+   
     const unsubscribe = onSnapshot(
       query(collection(db, "posts"), orderBy("timestamp", "desc")),
       (snapshot) => {
@@ -183,6 +198,14 @@ const PostList: React.FC = () => {
     }
   };
 
+  const handleShare = async (postId: string) => {
+    try {
+      // Update the shared posts in the database or any other source
+      setSharedPosts((prevSharedPosts) => [...prevSharedPosts, postId]);
+    } catch (error) {
+      console.error("Error sharing post:", error);
+    }
+  };
 
   const toggleCommentBox = () => {
     setShowCommentBox((prevShowCommentBox) => !prevShowCommentBox);
@@ -233,7 +256,16 @@ const PostList: React.FC = () => {
                 <HiOutlineChatBubbleOvalLeftEllipsis
                   onClick={toggleCommentBox}
                 />
-                <HiOutlineShare />
+        
+        {sharedPosts.includes(post.postId) ? (
+  <HiOutlineShare style={{ color: "green" }} />
+) : (
+  <HiOutlineShare
+    onClick={() => handleShare(post.postId)}
+    style={{ cursor: "pointer" }}
+  />
+)}
+         
               </div>
               <div className="right">
                 {!post.bookmarked ? (
@@ -256,7 +288,7 @@ const PostList: React.FC = () => {
             <div className="likes-count-container">
       <span className="likes-count">{post.likes} likes</span>
       </div>
-            {showCommentBox && (
+            {showCommentBox && post.postId && (
               <div className="comment-box">
                 <div className="comment-box-header">
                   <h4>Comments</h4>
