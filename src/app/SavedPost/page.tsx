@@ -7,8 +7,9 @@ import { db } from "../config/firebase";
 interface SavedPost {
   postId: string;
   image: string | null;
+  text:string;
   friendName: string;
-  commentName: string;
+  // commentName: string;
 }
 
 const SavedPosts = () => {
@@ -35,7 +36,7 @@ const SavedPosts = () => {
 
   const renderImage = (image: string | null) => {
     if (image) {
-      return <img src={image} alt="Post Image" />;
+      return <img src={image} alt="Post Image" className="saved-posts-image"/>;
     }
     return null;
   };
@@ -44,10 +45,13 @@ const SavedPosts = () => {
     <div className="saved-posts-container">
       <h1 className="saved-posts-title">Saved Posts</h1>
       {savedPosts.map((post) => (
-        <div key={post.postId} className="post-card">
+        <div key={post.postId} className="saved-post-card">
           <h3>Friend: {post.friendName}</h3>
-          <p>Saved by: {post.commentName}</p>
+          {/* <p>Saved by: {post.commentName}</p> */}
+          <p>{post.text}</p>
+          <div className="saved-posts-image-container">
           {renderImage(post.image)}
+          </div>
         </div>
       ))}
     </div>

@@ -10,17 +10,21 @@ import {
   updateDoc,
   where,
   setDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "./config/firebase";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaEllipsisH } from "react-icons/fa";
-import {
-  HiOutlineBookmark,
-  HiOutlineHeart,
-  HiOutlineShare,
-} from "react-icons/hi";
-import { HiOutlineChatBubbleOvalLeftEllipsis } from "react-icons/hi2";
- 
+import { FaRegBookmark } from "react-icons/fa";
+import { FaBookmark } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+import { FaRegCommentDots } from "react-icons/fa6";
+import { FiShare2 } from "react-icons/fi";
+import { AiOutlineClose } from "react-icons/ai";
+import {HiOutlineChatBubbleOvalLeftEllipsis} from "react-icons/hi2"
+import { serverTimestamp } from "firebase/firestore";
+
 interface Post {
   id: string;
   postId?: string;
@@ -38,7 +42,7 @@ interface Post {
   liked: boolean;
   // likeCount?:number;
 }
- 
+
 const PostList: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [textInput, setTextInput] = useState("");
@@ -51,10 +55,6 @@ const PostList: React.FC = () => {
   >([]);
   const [showCommentBox, setShowCommentBox] = useState(false);
 
-  const [sharedPosts, setSharedPosts] = useState<string[]>([]);
-
-
- 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -64,10 +64,15 @@ const PostList: React.FC = () => {
         );
         const postData = querySnapshot.docs.map((doc) => {
           const post = doc.data() as Post;
-          return { ...post, postId: doc.id, liked: false,  likes: post.likes || 0 }
+          return {
+            ...post,
+            postId: doc.id,
+            liked: false,
+            likes: post.likes || 0,
+          };
         });
         setPosts(postData);
- 
+
         const commentsSnapshot = await getDocs(collection(db, "comments"));
         const commentsData = commentsSnapshot.docs.map((doc) => {
           const comment = doc.data() as {
@@ -82,23 +87,6 @@ const PostList: React.FC = () => {
         console.error("Error fetching posts and comments: ", err);
       }
     };
- 
- 
-
-    const fetchSharedPosts = async () => {
-      try {
-        const sharedPostsRef = collection(db, "sharedPosts");
-        const querySnapshot = await getDocs(sharedPostsRef);
-        const sharedPostsData = querySnapshot.docs.map((doc) => doc.data().postId);
-        setSharedPosts(sharedPostsData);
-      } catch (err) {
-        console.error("Error fetching shared posts: ", err);
-      }
-    };
-  
-    fetchSharedPosts();
-  
-   
     const unsubscribe = onSnapshot(
       query(collection(db, "posts"), orderBy("timestamp", "desc")),
       (snapshot) => {
@@ -114,43 +102,56 @@ const PostList: React.FC = () => {
         setPosts(updatedPosts);
       }
     );
- 
+
     fetchPosts();
- 
+
     return () => unsubscribe();
   }, []);
- 
- 
+
   const handleBookmark = async (
     postId: string,
+    text: string,
     image: string,
-    commentName: string
+    commentName: string,
+    isBookmarked: boolean
   ) => {
     try {
       const postRef = doc(db, "posts", postId);
-      await setDoc(postRef, { bookmarked: true, likes: 1 }, { merge: true });
- 
-      await addDoc(collection(db, "savedPosts"), {
-        postId,
-        image,
-        commentName,
-      });
+      await updateDoc(postRef, { bookmarked: !isBookmarked });
+  
+      if (!isBookmarked) {
+        await addDoc(collection(db, "savedPosts"), {
+          postId,
+          text,
+          image,
+          commentName,
+          timestamp: serverTimestamp(),
+        });
+      } else {
+        const savedPostsQuery = query(
+          collection(db, "savedPosts"),
+          where("postId", "==", postId)
+        );
+        const querySnapshot = await getDocs(savedPostsQuery);
+        querySnapshot.forEach(async (doc) => {
+          await deleteDoc(doc.ref);
+        });
+      }
     } catch (err) {
-      console.error("Error saving bookmark: ", err);
+      console.error("Error saving/unsaving bookmark: ", err);
     }
   };
- 
+
   const commentUserName = sessionStorage.getItem("name");
   const commentUserImage = sessionStorage.getItem("userImage");
- 
- 
+
   const handleSubmit = async (postId: string, friendName: string) => {
     try {
       if (!commentUserName) {
         console.error("Error: commentUserName is undefined");
         return;
       }
- 
+
       const newComment = {
         comment: textInput,
         postId: postId,
@@ -158,9 +159,9 @@ const PostList: React.FC = () => {
         friendName: friendName,
         commentNameImage: commentUserImage,
       };
- 
+
       await addDoc(collection(db, "comments"), newComment);
- 
+
       setTextInput("");
       setComments([
         ...comments,
@@ -182,10 +183,10 @@ const PostList: React.FC = () => {
   ) => {
     try {
       const updatedLikeCount = liked ? likeCount - 1 : likeCount + 1;
-  
+
       const postRef = doc(db, "posts", postId);
       await updateDoc(postRef, { likes: updatedLikeCount });
-  
+
       const updatedPosts = posts.map((post) => {
         if (post.postId === postId) {
           return { ...post, liked: !liked, likes: updatedLikeCount };
@@ -198,28 +199,18 @@ const PostList: React.FC = () => {
     }
   };
 
-  const handleShare = async (postId: string) => {
-    try {
-      // Update the shared posts in the database or any other source
-      setSharedPosts((prevSharedPosts) => [...prevSharedPosts, postId]);
-    } catch (error) {
-      console.error("Error sharing post:", error);
-    }
-  };
-
   const toggleCommentBox = () => {
     setShowCommentBox((prevShowCommentBox) => !prevShowCommentBox);
   };
- 
 
- 
+
   return (
     <>
       <div className="postWrapper">
         {posts.map((post) => (
           <div key={post.id} className="post-card">
             <div className="header">
-              <div className="left">
+              <div className="left-profile">
                 {post.userImage && (
                   <img
                     src={post.userImage}
@@ -243,56 +234,69 @@ const PostList: React.FC = () => {
               )}
             </div>
             <div className="post-actions">
-              <div className="left">
-             
-              <button onClick={() => handleLike(post.postId, post.liked, post.likes)} className="like-button">
-  {post.liked ? (
-    <AiFillHeart className="heart-icon filled" />
-  ) : (
-    <AiOutlineHeart className="heart-icon" />
-  )}
-</button>
-
-                <HiOutlineChatBubbleOvalLeftEllipsis
+              <div className="left-icons">
+                <div className="icons">
+                <button
+                  onClick={() =>
+                    handleLike(post.postId, post.liked, post.likes)
+                  }
+                  className="like-button"
+                  // className="icons"
+                >
+                  {post.liked ? (
+                    <FaHeart  className = "heart"
+                    />
+                    // <AiFillHeart 
+                    // // onClick = {() =>}
+                    // // className="heart-icon filled" 
+                    // />
+                  ) : (
+                    <FaRegHeart className = "heart"
+                    />
+                    // <AiOutlineHeart 
+                    // // className="heart-icon" 
+                    // />
+                  )}
+                </button>
+                </div>
+                    <div className="icons">
+                <FaRegCommentDots 
                   onClick={toggleCommentBox}
                 />
-        
-        {sharedPosts.includes(post.postId) ? (
-  <HiOutlineShare style={{ color: "green" }} />
-) : (
-  <HiOutlineShare
-    onClick={() => handleShare(post.postId)}
-    style={{ cursor: "pointer" }}
-  />
-)}
-         
+                </div>
+                <div className="icons">
+                  <FiShare2 />
+                </div>
               </div>
               <div className="right">
-                {!post.bookmarked ? (
-                  <HiOutlineBookmark
-                    onClick={() =>
-                      handleBookmark(post.postId, post.image, post.commentName)
-                    }
-                  />
-                ) : (
-                  <HiOutlineBookmark
-                    className="bookmarked"
-                    onClick={() =>
-                      handleBookmark(post.postId, post.image, post.commentName)
-                    }
-                  />
-                )}
+              {!post.bookmarked ? (
+  <FaRegBookmark
+    onClick={() =>
+      handleBookmark(post.postId,post.text, post.image, post.commentName, false)
+    }
+  />
+) : (
+  <FaBookmark
+    className="bookmarked"
+    onClick={() =>
+      handleBookmark(post.postId,post.text, post.image, post.commentName, true)
+    }
+  />
+)}
+                
               </div>
-             
             </div>
+            
             <div className="likes-count-container">
-      <span className="likes-count">{post.likes} likes</span>
-      </div>
-            {showCommentBox && post.postId && (
+              <span className="likes-count">{post.likes} likes</span>
+            </div>
+            {showCommentBox && (
               <div className="comment-box">
                 <div className="comment-box-header">
                   <h4>Comments</h4>
-                  <button onClick={toggleCommentBox}>Close</button>
+                  <button onClick={toggleCommentBox}>
+                    <AiOutlineClose />
+                  </button>
                 </div>
                 <div className="comment-list">
                   {comments
@@ -335,5 +339,5 @@ const PostList: React.FC = () => {
     </>
   );
 };
- 
+
 export default PostList;

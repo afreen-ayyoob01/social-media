@@ -43,7 +43,7 @@ const Header: FC = () => {
   const [storedName, setStoredName] = useState<string | null>(null);
 
   useEffect(() => {
-  let currentUserId: string | null = null;
+  let currentUserId: string | null;
 
   if (typeof window !== "undefined") {
     currentUserId = sessionStorage.getItem("userId");
