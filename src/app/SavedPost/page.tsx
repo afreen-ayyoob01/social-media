@@ -9,7 +9,7 @@ interface SavedPost {
   image: string | null;
   text:string;
   friendName: string;
-  // commentName: string;
+  commentName: string;
 }
 
 const SavedPosts = () => {
@@ -47,7 +47,7 @@ const SavedPosts = () => {
       {savedPosts.map((post) => (
         <div key={post.postId} className="saved-post-card">
           <h3>Friend: {post.friendName}</h3>
-          {/* <p>Saved by: {post.commentName}</p> */}
+          <p>Saved by: {post.commentName}</p>
           <p>{post.text}</p>
           <div className="saved-posts-image-container">
           {renderImage(post.image)}

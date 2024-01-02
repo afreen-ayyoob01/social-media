@@ -10,7 +10,6 @@ import {
   updateDoc,
   where,
   setDoc,
-  deleteDoc,
 } from "firebase/firestore";
 import { db } from "./config/firebase";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
@@ -23,7 +22,6 @@ import { FaRegCommentDots } from "react-icons/fa6";
 import { FiShare2 } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
 import {HiOutlineChatBubbleOvalLeftEllipsis} from "react-icons/hi2"
-import { serverTimestamp } from "firebase/firestore";
 
 interface Post {
   id: string;
@@ -53,8 +51,10 @@ const PostList: React.FC = () => {
   const [savePost, setSavePost] = useState<
     { postId: string; comment: string; commentName: string }[]
   >([]);
-  const [showCommentBox, setShowCommentBox] = useState(false);
-
+  // const [showCommentBox, setShowCommentBox] = useState(false);
+  const [showCommentBox, setShowCommentBox] = useState<string | null>(null);
+  // const commentUserName = typeof sessionStorage !== "undefined" ? sessionStorage.getItem("name") : null;
+  // const commentUserImage = typeof sessionStorage !== "undefined" ? sessionStorage.getItem("userImage") : null;
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -64,6 +64,7 @@ const PostList: React.FC = () => {
         );
         const postData = querySnapshot.docs.map((doc) => {
           const post = doc.data() as Post;
+          // console.log("=====================================", post.likeCount);
           return {
             ...post,
             postId: doc.id,
@@ -87,6 +88,7 @@ const PostList: React.FC = () => {
         console.error("Error fetching posts and comments: ", err);
       }
     };
+
     const unsubscribe = onSnapshot(
       query(collection(db, "posts"), orderBy("timestamp", "desc")),
       (snapshot) => {
@@ -110,35 +112,20 @@ const PostList: React.FC = () => {
 
   const handleBookmark = async (
     postId: string,
-    text: string,
     image: string,
-    commentName: string,
-    isBookmarked: boolean
+    commentName: string
   ) => {
     try {
       const postRef = doc(db, "posts", postId);
-      await updateDoc(postRef, { bookmarked: !isBookmarked });
-  
-      if (!isBookmarked) {
-        await addDoc(collection(db, "savedPosts"), {
-          postId,
-          text,
-          image,
-          commentName,
-          timestamp: serverTimestamp(),
-        });
-      } else {
-        const savedPostsQuery = query(
-          collection(db, "savedPosts"),
-          where("postId", "==", postId)
-        );
-        const querySnapshot = await getDocs(savedPostsQuery);
-        querySnapshot.forEach(async (doc) => {
-          await deleteDoc(doc.ref);
-        });
-      }
+      await setDoc(postRef, { bookmarked: true, likes: 1 }, { merge: true });
+
+      await addDoc(collection(db, "savedPosts"), {
+        postId,
+        image,
+        commentName,
+      });
     } catch (err) {
-      console.error("Error saving/unsaving bookmark: ", err);
+      console.error("Error saving bookmark: ", err);
     }
   };
 
@@ -202,8 +189,9 @@ const PostList: React.FC = () => {
   const toggleCommentBox = () => {
     setShowCommentBox((prevShowCommentBox) => !prevShowCommentBox);
   };
-
-
+  const handleCommentIconClick = (postId: string) => {
+    setShowCommentBox(postId);
+  };
   return (
     <>
       <div className="postWrapper">
@@ -261,7 +249,8 @@ const PostList: React.FC = () => {
                 </div>
                     <div className="icons">
                 <FaRegCommentDots 
-                  onClick={toggleCommentBox}
+                  // onClick={toggleCommentBox}
+                  onClick={() => handleCommentIconClick(post.postId)}
                 />
                 </div>
                 <div className="icons">
@@ -269,28 +258,27 @@ const PostList: React.FC = () => {
                 </div>
               </div>
               <div className="right">
-              {!post.bookmarked ? (
-  <FaRegBookmark
-    onClick={() =>
-      handleBookmark(post.postId,post.text, post.image, post.commentName, false)
-    }
-  />
-) : (
-  <FaBookmark
-    className="bookmarked"
-    onClick={() =>
-      handleBookmark(post.postId,post.text, post.image, post.commentName, true)
-    }
-  />
-)}
-                
+                {!post.bookmarked ? (
+                  <FaRegBookmark
+                    onClick={() =>
+                      handleBookmark(post.postId, post.image, post.commentName)
+                    }
+                  />
+                ) : (
+                  <FaBookmark
+                    className="bookmarked"
+                    onClick={() =>
+                      handleBookmark(post.postId, post.image, post.commentName)
+                    }
+                  />
+                )}
               </div>
             </div>
             
             <div className="likes-count-container">
               <span className="likes-count">{post.likes} likes</span>
             </div>
-            {showCommentBox && (
+            {showCommentBox === post.postId && (
               <div className="comment-box">
                 <div className="comment-box-header">
                   <h4>Comments</h4>
